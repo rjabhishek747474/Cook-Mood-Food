@@ -1,0 +1,57 @@
+"""
+DailyCook Backend - FastAPI Application
+Utility-first recipe generator focused on execution
+"""
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from contextlib import asynccontextmanager
+
+from routes import fridge, fitness, cuisine, drinks, daily, history, ai
+from database import create_db_and_tables
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Initialize database on startup"""
+    await create_db_and_tables()
+    yield
+
+app = FastAPI(
+    title="DailyCook API",
+    description="Utility-first recipe generator - execution over discovery",
+    version="1.0.0",
+    lifespan=lifespan
+)
+
+# CORS middleware for frontend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Include routers
+app.include_router(fridge.router, prefix="/api/fridge", tags=["Fridge Recipes"])
+app.include_router(fitness.router, prefix="/api/fitness", tags=["Fitness Recipes"])
+app.include_router(cuisine.router, prefix="/api/cuisine", tags=["Global Cuisine"])
+app.include_router(drinks.router, prefix="/api/drinks", tags=["Drinks"])
+app.include_router(daily.router, prefix="/api/daily", tags=["Recipe of the Day"])
+app.include_router(history.router, prefix="/api/history", tags=["History"])
+app.include_router(ai.router, prefix="/api/ai", tags=["AI Generation"])
+
+@app.get("/")
+async def root():
+    return {
+        "message": "DailyCook API",
+        "version": "1.0.0",
+        "docs": "/docs"
+    }
+
+@app.get("/health")
+async def health_check():
+    return {"status": "healthy"}

@@ -1,0 +1,44 @@
+DAILYCOOK INSTALLATION GUIDE
+==========================
+
+PREREQUISITES
+-------------
+1. Python 3.10 or higher
+2. Node.js 18 or higher
+3. Git
+4. Google Gemini API Key (https://aistudio.google.com/)
+
+INSTALLATION STEPS
+------------------
+
+1. CLONE REPOSITORY
+   git clone <repository-url>
+   cd DailyCook
+
+2. BACKEND SETUP
+   cd backend
+   python -m venv venv
+   
+   # Windows
+   .\venv\Scripts\activate
+   # Mac/Linux
+   source venv/bin/activate
+
+   pip install -r requirements.txt
+   
+   # Duplicate .env.example to .env and add your GEMINI_API_KEY
+   
+   # Run Server
+   uvicorn main:app --reload
+
+3. FRONTEND SETUP
+   cd frontend
+   npm install
+   
+   # Run App
+   npm run dev
+
+ACCESS THE APP
+--------------
+Open http://localhost:3000 in your browser.
+API documentation is at http://localhost:8000/docs

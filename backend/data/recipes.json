@@ -1,0 +1,762 @@
+{
+  "recipes": [
+    {
+      "id": "egg-bhurji",
+      "name": "Tomato Egg Bhurji",
+      "cuisine": "Indian",
+      "category": "food",
+      "fitness_tags": ["high_protein", "low_carb"],
+      "diet": "egg",
+      "difficulty": "Easy",
+      "time_minutes": 10,
+      "required_ingredients": ["eggs", "onion", "tomato", "oil", "salt"],
+      "optional_ingredients": ["green chili", "turmeric", "black pepper", "coriander"],
+      "cookware": ["pan", "spatula", "bowl"],
+      "steps": [
+        "Chop onion and tomato finely",
+        "Heat 1 tsp oil in pan on medium flame",
+        "Add onion and cook until translucent (2 min)",
+        "Add tomato and cook until soft (2 min)",
+        "Beat 2 eggs with salt in a bowl",
+        "Pour eggs into pan and stir gently",
+        "Remove when eggs are just cooked (1-2 min)"
+      ],
+      "common_mistakes": [
+        "Overcooking eggs makes them rubbery",
+        "High flame burns onion quickly"
+      ],
+      "nutrition": {
+        "calories": 220,
+        "protein_g": 14,
+        "carbs_g": 8,
+        "fats_g": 15
+      },
+      "servings": 1
+    },
+    {
+      "id": "egg-white-scramble",
+      "name": "High-Protein Egg White Scramble",
+      "cuisine": "Global",
+      "category": "food",
+      "fitness_tags": ["high_protein", "low_fat", "fat_loss"],
+      "diet": "egg",
+      "difficulty": "Easy",
+      "time_minutes": 8,
+      "required_ingredients": ["egg whites", "onion", "oil", "salt"],
+      "optional_ingredients": ["spinach", "mushrooms", "black pepper"],
+      "cookware": ["non-stick pan", "spatula"],
+      "steps": [
+        "Heat non-stick pan on medium flame",
+        "Add 1 tsp oil",
+        "Add chopped onion and cook until soft",
+        "Add 4 egg whites with salt",
+        "Stir gently for 2-3 minutes",
+        "Remove immediately when set"
+      ],
+      "common_mistakes": [
+        "Overcooking ruins texture",
+        "Adding cheese breaks fat-loss goal"
+      ],
+      "nutrition": {
+        "calories": 140,
+        "protein_g": 22,
+        "carbs_g": 4,
+        "fats_g": 5
+      },
+      "cooking_impact": "Minimal oil preserves protein and reduces fat",
+      "servings": 1
+    },
+    {
+      "id": "simple-dal",
+      "name": "Simple Yellow Dal",
+      "cuisine": "Indian",
+      "category": "food",
+      "fitness_tags": ["high_protein", "vegetarian"],
+      "diet": "veg",
+      "difficulty": "Easy",
+      "time_minutes": 25,
+      "required_ingredients": ["toor dal", "water", "turmeric", "salt", "oil"],
+      "optional_ingredients": ["cumin seeds", "garlic", "onion", "tomato", "green chili"],
+      "cookware": ["pressure cooker", "pan", "ladle"],
+      "steps": [
+        "Wash 1 cup dal thoroughly",
+        "Add dal to pressure cooker with 3 cups water",
+        "Add 1/2 tsp turmeric and salt",
+        "Pressure cook for 3 whistles",
+        "Heat oil in pan, add cumin seeds",
+        "Add cooked dal and mix well",
+        "Simmer for 5 minutes"
+      ],
+      "common_mistakes": [
+        "Not washing dal leads to foam overflow",
+        "Too little water makes dal thick"
+      ],
+      "nutrition": {
+        "calories": 180,
+        "protein_g": 12,
+        "carbs_g": 28,
+        "fats_g": 4
+      },
+      "servings": 2
+    },
+    {
+      "id": "jeera-rice",
+      "name": "Jeera Rice",
+      "cuisine": "Indian",
+      "category": "food",
+      "fitness_tags": ["maintenance"],
+      "diet": "veg",
+      "difficulty": "Easy",
+      "time_minutes": 20,
+      "required_ingredients": ["basmati rice", "cumin seeds", "ghee", "water", "salt"],
+      "optional_ingredients": ["bay leaf", "cloves", "cardamom"],
+      "cookware": ["pot", "strainer"],
+      "steps": [
+        "Wash 1 cup rice and soak for 15 min",
+        "Heat 1 tbsp ghee in pot",
+        "Add cumin seeds and let splutter",
+        "Add drained rice and sauté 1 min",
+        "Add 2 cups water and salt",
+        "Cover and cook on low until done",
+        "Fluff with fork before serving"
+      ],
+      "common_mistakes": [
+        "Not soaking rice makes it sticky",
+        "Stirring rice breaks grains"
+      ],
+      "nutrition": {
+        "calories": 210,
+        "protein_g": 4,
+        "carbs_g": 40,
+        "fats_g": 5
+      },
+      "servings": 2
+    },
+    {
+      "id": "chicken-teriyaki",
+      "name": "Simple Chicken Teriyaki",
+      "cuisine": "Japanese",
+      "category": "food",
+      "fitness_tags": ["high_protein", "muscle_gain"],
+      "diet": "non-veg",
+      "difficulty": "Medium",
+      "time_minutes": 20,
+      "required_ingredients": ["chicken breast", "soy sauce", "sugar", "oil"],
+      "optional_ingredients": ["garlic", "ginger", "sesame seeds", "green onion"],
+      "cookware": ["pan", "knife", "cutting board"],
+      "steps": [
+        "Cut chicken breast into bite-size pieces",
+        "Heat 1 tbsp oil in pan on medium-high",
+        "Add chicken and cook until white (5 min)",
+        "Mix 2 tbsp soy sauce with 1 tbsp sugar",
+        "Pour sauce over chicken",
+        "Cook until sauce thickens (3 min)",
+        "Garnish with sesame seeds if available"
+      ],
+      "common_mistakes": [
+        "Too much soy sauce makes it overly salty",
+        "High heat burns the sugar"
+      ],
+      "nutrition": {
+        "calories": 280,
+        "protein_g": 32,
+        "carbs_g": 12,
+        "fats_g": 10
+      },
+      "servings": 2
+    },
+    {
+      "id": "egg-fried-rice",
+      "name": "Egg Fried Rice",
+      "cuisine": "Chinese",
+      "category": "food",
+      "fitness_tags": ["maintenance"],
+      "diet": "egg",
+      "difficulty": "Easy",
+      "time_minutes": 15,
+      "required_ingredients": ["cooked rice", "eggs", "oil", "soy sauce", "salt"],
+      "optional_ingredients": ["green onion", "garlic", "peas", "carrot"],
+      "cookware": ["wok or pan", "spatula"],
+      "steps": [
+        "Heat 2 tbsp oil in wok on high flame",
+        "Add beaten eggs, scramble, and set aside",
+        "Add more oil if needed",
+        "Add cold rice and stir-fry for 3 min",
+        "Add soy sauce and mix well",
+        "Add scrambled eggs back",
+        "Toss everything together for 1 min"
+      ],
+      "common_mistakes": [
+        "Using hot rice makes it mushy",
+        "Not enough heat = soggy rice"
+      ],
+      "nutrition": {
+        "calories": 320,
+        "protein_g": 12,
+        "carbs_g": 45,
+        "fats_g": 12
+      },
+      "servings": 2
+    },
+    {
+      "id": "tomato-pasta",
+      "name": "Simple Tomato Pasta",
+      "cuisine": "Global",
+      "category": "food",
+      "fitness_tags": ["maintenance"],
+      "diet": "veg",
+      "difficulty": "Easy",
+      "time_minutes": 20,
+      "required_ingredients": ["pasta", "tomato", "garlic", "olive oil", "salt"],
+      "optional_ingredients": ["basil", "oregano", "chili flakes", "parmesan"],
+      "cookware": ["pot", "pan", "strainer"],
+      "steps": [
+        "Boil pasta according to package (8-10 min)",
+        "Meanwhile, dice tomatoes finely",
+        "Heat olive oil, add minced garlic",
+        "Add tomatoes and cook until soft (5 min)",
+        "Add salt and herbs if available",
+        "Drain pasta and add to sauce",
+        "Toss well and serve hot"
+      ],
+      "common_mistakes": [
+        "Overcooking pasta makes it mushy",
+        "Burning garlic makes sauce bitter"
+      ],
+      "nutrition": {
+        "calories": 350,
+        "protein_g": 10,
+        "carbs_g": 55,
+        "fats_g": 10
+      },
+      "servings": 2
+    },
+    {
+      "id": "miso-soup",
+      "name": "Simple Miso Soup",
+      "cuisine": "Japanese",
+      "category": "food",
+      "fitness_tags": ["low_calorie", "fat_loss"],
+      "diet": "veg",
+      "difficulty": "Easy",
+      "time_minutes": 10,
+      "required_ingredients": ["miso paste", "tofu", "water", "green onion"],
+      "optional_ingredients": ["wakame seaweed", "dashi stock"],
+      "cookware": ["pot", "ladle"],
+      "steps": [
+        "Bring 2 cups water to gentle simmer",
+        "Cut tofu into small cubes",
+        "Add tofu to pot",
+        "Remove pot from heat",
+        "Dissolve 1 tbsp miso paste in water",
+        "Add sliced green onion",
+        "Serve immediately - don't boil miso"
+      ],
+      "common_mistakes": [
+        "Boiling miso kills beneficial bacteria",
+        "Too much miso makes it overly salty"
+      ],
+      "nutrition": {
+        "calories": 80,
+        "protein_g": 6,
+        "carbs_g": 8,
+        "fats_g": 3
+      },
+      "servings": 2
+    },
+    {
+      "id": "chicken-stir-fry",
+      "name": "Quick Chicken Stir Fry",
+      "cuisine": "Chinese",
+      "category": "food",
+      "fitness_tags": ["high_protein", "muscle_gain"],
+      "diet": "non-veg",
+      "difficulty": "Easy",
+      "time_minutes": 15,
+      "required_ingredients": ["chicken breast", "bell pepper", "soy sauce", "oil", "garlic"],
+      "optional_ingredients": ["ginger", "broccoli", "carrot", "sesame oil"],
+      "cookware": ["wok or pan", "knife"],
+      "steps": [
+        "Slice chicken into thin strips",
+        "Cut bell pepper into strips",
+        "Heat oil in wok on high heat",
+        "Add chicken and stir-fry 4-5 min",
+        "Add garlic and vegetables",
+        "Add soy sauce and toss 2 min",
+        "Serve immediately"
+      ],
+      "common_mistakes": [
+        "Overcrowding pan steams instead of fries",
+        "Low heat makes chicken rubbery"
+      ],
+      "nutrition": {
+        "calories": 250,
+        "protein_g": 30,
+        "carbs_g": 10,
+        "fats_g": 10
+      },
+      "servings": 2
+    },
+    {
+      "id": "aloo-paratha",
+      "name": "Aloo Paratha",
+      "cuisine": "Indian",
+      "category": "food",
+      "fitness_tags": ["maintenance"],
+      "diet": "veg",
+      "difficulty": "Medium",
+      "time_minutes": 30,
+      "required_ingredients": ["wheat flour", "potato", "salt", "oil", "water"],
+      "optional_ingredients": ["cumin", "coriander", "green chili", "ajwain"],
+      "cookware": ["rolling pin", "tawa/griddle", "bowl"],
+      "steps": [
+        "Boil and mash 2 potatoes",
+        "Add salt and spices to potato",
+        "Knead flour with water into soft dough",
+        "Make small balls of dough",
+        "Roll out, add potato filling, seal",
+        "Roll again gently into flat circle",
+        "Cook on hot tawa with oil on both sides"
+      ],
+      "common_mistakes": [
+        "Filling leaking means dough too thin",
+        "Cold tawa makes paratha chewy"
+      ],
+      "nutrition": {
+        "calories": 280,
+        "protein_g": 6,
+        "carbs_g": 42,
+        "fats_g": 10
+      },
+      "servings": 2
+    },
+    {
+      "id": "omelette",
+      "name": "Classic Omelette",
+      "cuisine": "Global",
+      "category": "food",
+      "fitness_tags": ["high_protein"],
+      "diet": "egg",
+      "difficulty": "Easy",
+      "time_minutes": 8,
+      "required_ingredients": ["eggs", "butter", "salt"],
+      "optional_ingredients": ["onion", "cheese", "herbs", "mushrooms"],
+      "cookware": ["non-stick pan", "spatula"],
+      "steps": [
+        "Beat 2-3 eggs with salt",
+        "Heat butter in non-stick pan",
+        "Pour eggs and let set slightly (30 sec)",
+        "Gently push edges to center",
+        "Add fillings on one side",
+        "Fold omelette in half",
+        "Slide onto plate when just set"
+      ],
+      "common_mistakes": [
+        "High heat makes omelette dry",
+        "Overcooking makes it rubbery"
+      ],
+      "nutrition": {
+        "calories": 200,
+        "protein_g": 14,
+        "carbs_g": 2,
+        "fats_g": 16
+      },
+      "servings": 1
+    },
+    {
+      "id": "paneer-bhurji",
+      "name": "Paneer Bhurji",
+      "cuisine": "Indian",
+      "category": "food",
+      "fitness_tags": ["high_protein", "vegetarian"],
+      "diet": "veg",
+      "difficulty": "Easy",
+      "time_minutes": 15,
+      "required_ingredients": ["paneer", "onion", "tomato", "oil", "salt"],
+      "optional_ingredients": ["turmeric", "cumin", "green chili", "coriander"],
+      "cookware": ["pan", "spatula"],
+      "steps": [
+        "Crumble paneer into small pieces",
+        "Dice onion and tomato",
+        "Heat oil and add cumin if using",
+        "Add onion and cook until golden",
+        "Add tomato and cook until soft",
+        "Add crumbled paneer and spices",
+        "Cook for 3-4 min, stirring gently"
+      ],
+      "common_mistakes": [
+        "Overcooking paneer makes it hard",
+        "Not enough oil makes it dry"
+      ],
+      "nutrition": {
+        "calories": 280,
+        "protein_g": 18,
+        "carbs_g": 8,
+        "fats_g": 20
+      },
+      "servings": 2
+    },
+    {
+      "id": "grilled-chicken-salad",
+      "name": "Grilled Chicken Salad",
+      "cuisine": "Global",
+      "category": "food",
+      "fitness_tags": ["high_protein", "low_carb", "fat_loss"],
+      "diet": "non-veg",
+      "difficulty": "Easy",
+      "time_minutes": 20,
+      "required_ingredients": ["chicken breast", "lettuce", "olive oil", "salt", "lemon"],
+      "optional_ingredients": ["cucumber", "tomato", "onion", "pepper"],
+      "cookware": ["grill pan", "bowl"],
+      "steps": [
+        "Season chicken with salt and pepper",
+        "Heat grill pan on high",
+        "Cook chicken 5-6 min each side",
+        "Let rest, then slice",
+        "Wash and chop vegetables",
+        "Arrange in bowl with chicken",
+        "Drizzle with olive oil and lemon"
+      ],
+      "common_mistakes": [
+        "Cutting chicken immediately loses juices",
+        "Overcooking makes chicken dry"
+      ],
+      "nutrition": {
+        "calories": 250,
+        "protein_g": 35,
+        "carbs_g": 8,
+        "fats_g": 10
+      },
+      "servings": 1
+    },
+    {
+      "id": "vegetable-soup",
+      "name": "Simple Vegetable Soup",
+      "cuisine": "Global",
+      "category": "food",
+      "fitness_tags": ["low_calorie", "fat_loss"],
+      "diet": "veg",
+      "difficulty": "Easy",
+      "time_minutes": 25,
+      "required_ingredients": ["carrot", "potato", "onion", "water", "salt"],
+      "optional_ingredients": ["celery", "tomato", "garlic", "herbs"],
+      "cookware": ["pot", "knife", "ladle"],
+      "steps": [
+        "Dice all vegetables into small cubes",
+        "Heat pot with a little oil",
+        "Add onion and cook until soft",
+        "Add other vegetables and stir",
+        "Add water to cover vegetables",
+        "Simmer for 20 min until tender",
+        "Season with salt and herbs"
+      ],
+      "common_mistakes": [
+        "Too little water makes soup thick",
+        "Cutting vegetables unevenly = uneven cooking"
+      ],
+      "nutrition": {
+        "calories": 120,
+        "protein_g": 3,
+        "carbs_g": 22,
+        "fats_g": 3
+      },
+      "servings": 3
+    },
+    {
+      "id": "moong-dal-chilla",
+      "name": "Moong Dal Chilla",
+      "cuisine": "Indian",
+      "category": "food",
+      "fitness_tags": ["high_protein", "vegetarian", "fat_loss"],
+      "diet": "veg",
+      "difficulty": "Easy",
+      "time_minutes": 20,
+      "required_ingredients": ["moong dal", "water", "salt", "oil"],
+      "optional_ingredients": ["onion", "green chili", "ginger", "coriander"],
+      "cookware": ["blender", "non-stick pan", "ladle"],
+      "steps": [
+        "Soak 1 cup moong dal for 2 hours",
+        "Blend dal with minimal water to paste",
+        "Add salt and mix well",
+        "Heat non-stick pan on medium",
+        "Pour batter and spread thin",
+        "Cook until golden, flip once",
+        "Serve hot with chutney"
+      ],
+      "common_mistakes": [
+        "Thick batter = thick chilla",
+        "Low heat = soggy chilla"
+      ],
+      "nutrition": {
+        "calories": 180,
+        "protein_g": 14,
+        "carbs_g": 24,
+        "fats_g": 4
+      },
+      "servings": 2
+    }
+  ],
+  "drinks": [
+    {
+      "id": "banana-peanut-shake",
+      "name": "Banana Peanut Protein Shake",
+      "category": "healthy",
+      "diet": "veg",
+      "time_minutes": 5,
+      "required_ingredients": ["banana", "peanut butter", "milk"],
+      "optional_ingredients": ["honey", "cinnamon"],
+      "steps": [
+        "Add 1 banana to blender",
+        "Add 1 tbsp peanut butter",
+        "Add 1 cup milk",
+        "Blend for 30 seconds",
+        "Serve immediately"
+      ],
+      "serving_size": "1 glass (300ml)",
+      "health_note": "High calorie, avoid during fat loss",
+      "nutrition": {
+        "calories": 320,
+        "protein_g": 12,
+        "carbs_g": 38,
+        "fats_g": 14
+      }
+    },
+    {
+      "id": "green-smoothie",
+      "name": "Green Detox Smoothie",
+      "category": "healthy",
+      "diet": "veg",
+      "time_minutes": 5,
+      "required_ingredients": ["spinach", "banana", "water"],
+      "optional_ingredients": ["ginger", "lemon", "honey"],
+      "steps": [
+        "Add handful of spinach to blender",
+        "Add 1 frozen banana",
+        "Add 1 cup water",
+        "Blend until smooth",
+        "Add honey if needed"
+      ],
+      "serving_size": "1 glass (300ml)",
+      "health_note": "Low calorie, rich in vitamins",
+      "nutrition": {
+        "calories": 120,
+        "protein_g": 3,
+        "carbs_g": 28,
+        "fats_g": 1
+      }
+    },
+    {
+      "id": "masala-chai",
+      "name": "Masala Chai",
+      "category": "normal",
+      "diet": "veg",
+      "time_minutes": 10,
+      "required_ingredients": ["tea leaves", "milk", "water", "sugar", "ginger"],
+      "optional_ingredients": ["cardamom", "cinnamon", "cloves"],
+      "steps": [
+        "Boil water with ginger and spices",
+        "Add tea leaves and simmer 2 min",
+        "Add milk and bring to boil",
+        "Add sugar to taste",
+        "Strain and serve hot"
+      ],
+      "serving_size": "1 cup (150ml)",
+      "health_note": null,
+      "nutrition": {
+        "calories": 80,
+        "protein_g": 2,
+        "carbs_g": 12,
+        "fats_g": 3
+      }
+    },
+    {
+      "id": "nimbu-pani",
+      "name": "Nimbu Pani (Lemonade)",
+      "category": "healthy",
+      "diet": "veg",
+      "time_minutes": 5,
+      "required_ingredients": ["lemon", "water", "sugar", "salt"],
+      "optional_ingredients": ["mint", "cumin powder", "black salt"],
+      "steps": [
+        "Squeeze juice from 1 lemon",
+        "Add to 2 glasses of cold water",
+        "Add sugar and salt to taste",
+        "Stir well until dissolved",
+        "Add ice and mint if desired"
+      ],
+      "serving_size": "2 glasses (500ml)",
+      "health_note": "Good for hydration, reduces if using less sugar",
+      "nutrition": {
+        "calories": 60,
+        "protein_g": 0,
+        "carbs_g": 16,
+        "fats_g": 0
+      }
+    },
+    {
+      "id": "mango-lassi",
+      "name": "Mango Lassi",
+      "category": "normal",
+      "diet": "veg",
+      "time_minutes": 5,
+      "required_ingredients": ["mango", "yogurt", "sugar", "milk"],
+      "optional_ingredients": ["cardamom", "saffron"],
+      "steps": [
+        "Add 1 cup mango chunks to blender",
+        "Add 1/2 cup yogurt",
+        "Add 1/2 cup milk",
+        "Add sugar to taste",
+        "Blend until smooth"
+      ],
+      "serving_size": "1 glass (300ml)",
+      "health_note": null,
+      "nutrition": {
+        "calories": 220,
+        "protein_g": 6,
+        "carbs_g": 42,
+        "fats_g": 4
+      }
+    },
+    {
+      "id": "cold-coffee",
+      "name": "Cold Coffee",
+      "category": "normal",
+      "diet": "veg",
+      "time_minutes": 5,
+      "required_ingredients": ["instant coffee", "milk", "sugar", "ice"],
+      "optional_ingredients": ["vanilla extract", "chocolate sauce"],
+      "steps": [
+        "Add 1 tsp coffee to blender",
+        "Add 1 cup cold milk",
+        "Add sugar to taste",
+        "Add ice cubes",
+        "Blend until frothy"
+      ],
+      "serving_size": "1 glass (250ml)",
+      "health_note": null,
+      "nutrition": {
+        "calories": 140,
+        "protein_g": 4,
+        "carbs_g": 22,
+        "fats_g": 4
+      }
+    },
+    {
+      "id": "mojito-mocktail",
+      "name": "Virgin Mojito",
+      "category": "normal",
+      "diet": "veg",
+      "time_minutes": 5,
+      "required_ingredients": ["lime", "mint", "sugar", "soda water", "ice"],
+      "optional_ingredients": ["cucumber"],
+      "steps": [
+        "Muddle mint leaves with lime juice",
+        "Add sugar and mix well",
+        "Add ice cubes",
+        "Top with soda water",
+        "Stir and serve"
+      ],
+      "serving_size": "1 glass (300ml)",
+      "health_note": null,
+      "nutrition": {
+        "calories": 80,
+        "protein_g": 0,
+        "carbs_g": 20,
+        "fats_g": 0
+      }
+    },
+    {
+      "id": "whiskey-sour",
+      "name": "Simple Whiskey Sour",
+      "category": "alcoholic",
+      "diet": "non-veg",
+      "time_minutes": 5,
+      "required_ingredients": ["whiskey", "lemon juice", "sugar", "ice"],
+      "optional_ingredients": ["egg white", "bitters"],
+      "steps": [
+        "Add 2 oz whiskey to shaker",
+        "Add 1 oz fresh lemon juice",
+        "Add 1/2 oz simple syrup",
+        "Add ice and shake well",
+        "Strain into glass"
+      ],
+      "serving_size": "1 cocktail",
+      "health_note": "Drink responsibly. Alcohol content: ~15%",
+      "nutrition": {
+        "calories": 160,
+        "protein_g": 0,
+        "carbs_g": 8,
+        "fats_g": 0
+      }
+    },
+    {
+      "id": "rum-coke",
+      "name": "Rum and Coke",
+      "category": "alcoholic",
+      "diet": "non-veg",
+      "time_minutes": 2,
+      "required_ingredients": ["rum", "cola", "ice", "lime"],
+      "optional_ingredients": [],
+      "steps": [
+        "Fill glass with ice",
+        "Add 2 oz rum",
+        "Top with cola",
+        "Squeeze lime wedge",
+        "Stir gently"
+      ],
+      "serving_size": "1 cocktail",
+      "health_note": "Drink responsibly. Alcohol content: ~10%",
+      "nutrition": {
+        "calories": 180,
+        "protein_g": 0,
+        "carbs_g": 20,
+        "fats_g": 0
+      }
+    },
+    {
+      "id": "protein-shake-choco",
+      "name": "Chocolate Protein Shake",
+      "category": "healthy",
+      "diet": "veg",
+      "time_minutes": 5,
+      "required_ingredients": ["protein powder", "milk", "banana", "cocoa powder"],
+      "optional_ingredients": ["peanut butter", "honey"],
+      "steps": [
+        "Add 1 scoop protein powder to blender",
+        "Add 1 cup milk",
+        "Add 1 banana",
+        "Add 1 tbsp cocoa powder",
+        "Blend until smooth"
+      ],
+      "serving_size": "1 glass (350ml)",
+      "health_note": "Post-workout recovery drink, high protein",
+      "nutrition": {
+        "calories": 280,
+        "protein_g": 28,
+        "carbs_g": 32,
+        "fats_g": 6
+      }
+    }
+  ],
+  "ingredient_aliases": {
+    "onion": ["onions", "pyaz", "pyaaz", "kanda"],
+    "tomato": ["tomatoes", "tamatar"],
+    "potato": ["potatoes", "aloo", "batata"],
+    "garlic": ["lahsun", "garlic cloves"],
+    "ginger": ["adrak", "ginger root"],
+    "green chili": ["green chillies", "hari mirch", "green pepper"],
+    "coriander": ["cilantro", "dhania", "coriander leaves"],
+    "turmeric": ["haldi", "turmeric powder"],
+    "cumin": ["cumin seeds", "jeera"],
+    "oil": ["cooking oil", "vegetable oil", "sunflower oil"],
+    "salt": ["namak", "sea salt", "table salt"],
+    "egg whites": ["egg white"],
+    "eggs": ["egg", "anda"],
+    "chicken breast": ["chicken", "chicken meat"],
+    "paneer": ["cottage cheese", "indian cheese"],
+    "toor dal": ["arhar dal", "pigeon peas"],
+    "moong dal": ["mung dal", "mung beans", "green gram"],
+    "basmati rice": ["rice", "chawal"],
+    "wheat flour": ["atta", "whole wheat flour", "flour"]
+  }
+}
