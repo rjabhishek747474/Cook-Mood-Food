@@ -1,63 +1,105 @@
 # Installation Guide - DailyCook
 
-This guide covers the installation of both the backend (FastAPI) and frontend (Next.js) components of the DailyCook application.
-
 ## Prerequisites
 - **Python 3.10+**
 - **Node.js 18+** & **npm**
 - **Git**
-- **Google Gemini API Key** (Get one here: https://aistudio.google.com/)
+- **Docker** (optional, for containerized deployment)
+- **Google Gemini API Key** (https://aistudio.google.com/)
 
 ---
 
-## 1. Clone the Repository
+## Option 1: Docker Installation (Recommended)
+
 ```bash
-git clone <repository-url>
-cd DailyCook
+# Clone the repository
+git clone https://github.com/rjabhishek747474/Cook-Mood-Food
+cd Cook-Mood-Food
+
+# Start all services
+docker-compose up -d
+
+# Create test users
+docker-compose exec backend python -m scripts.seed_data
+
+# Open http://localhost:3000
 ```
 
-## 2. Backend Setup
-1. Navigate to the backend directory:
-   ```bash
-   cd backend
-   ```
-2. Create a virtual environment:
-   ```bash
-   python -m venv venv
-   ```
-3. Activate the virtual environment:
-   - **Windows**: `.\venv\Scripts\activate`
-   - **Mac/Linux**: `source venv/bin/activate`
-4. Install Python dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-5. Configure Environment Variables:
-   - Duplicate `.env.example` and rename it to `.env`.
-   - Open `.env` and paste your Gemini API key:
-     ```env
-     GEMINI_API_KEY=your_actual_api_key_here
-     ```
-
-## 3. Frontend Setup
-1. Navigate to the frontend directory:
-   ```bash
-   cd frontend
-   ```
-2. Install Node.js dependencies:
-   ```bash
-   npm install
-   ```
-3. (Optional) Configure Environment:
-   - Create a `.env.local` file if you need to change the API URL (defaults to http://localhost:8000).
+### Test Credentials
+| Role | Email | Password |
+|------|-------|----------|
+| User | test@test.com | test123 |
+| Admin | admin@dailycook.com | admin123 |
 
 ---
 
-## 4. Verification
-To ensure everything is installed correctly, you can run the test suite:
+## Option 2: Manual Installation
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/rjabhishek747474/Cook-Mood-Food
+cd Cook-Mood-Food
+```
+
+### 2. Backend Setup
 ```bash
 cd backend
-# With venv activated
+
+# Create virtual environment
+python -m venv venv
+
+# Activate (Windows)
+.\venv\Scripts\activate
+
+# Activate (Mac/Linux)
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Configure environment
+# Create .env file with:
+# GEMINI_API_KEY=your_api_key_here
+# SECRET_KEY=your_secret_key_here
+
+# Create test users
+python -m scripts.seed_data
+```
+
+### 3. Frontend Setup
+```bash
+cd frontend
+
+# Install dependencies
+npm install
+
+# (Optional) Create .env.local
+# NEXT_PUBLIC_API_URL=http://localhost:8000
+```
+
+---
+
+## Verification
+Run the test suite to ensure everything works:
+```bash
+cd backend
 python -m pytest tests/test_comprehensive.py -v
+python -m pytest tests/test_dashboard.py -v
 ```
 All tests should pass.
+
+---
+
+## Environment Variables
+
+### Backend (.env)
+```env
+GEMINI_API_KEY=your_gemini_api_key
+SECRET_KEY=your_jwt_secret_key
+DATABASE_URL=sqlite+aiosqlite:///./dailycook.db
+```
+
+### Frontend (.env.local)
+```env
+NEXT_PUBLIC_API_URL=http://localhost:8000
+```

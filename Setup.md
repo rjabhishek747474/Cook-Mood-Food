@@ -2,58 +2,81 @@
 
 Once you have installed the dependencies (see Install.md), follow these steps to run the application.
 
-## 1. Start the Backend Server
-The backend powers the AI, database, and API logic.
+## Quick Start with Docker
+```bash
+docker-compose up -d
+docker-compose exec backend python -m scripts.seed_data
+```
+Open http://localhost:3000 - done!
 
-1. Open a terminal.
-2. Navigate to the `backend` folder:
+---
+
+## Manual Setup
+
+### 1. Start the Backend Server
+1. Navigate to the backend folder:
    ```bash
    cd backend
    ```
-3. Activate the virtual environment:
+2. Activate the virtual environment:
    - Windows: `.\venv\Scripts\activate`
    - Linux/Mac: `source venv/bin/activate`
+3. Create test users (first time only):
+   ```bash
+   python -m scripts.seed_data
+   ```
 4. Start the server:
    ```bash
    uvicorn main:app --reload --port 8000
    ```
-   *The API will be available at http://localhost:8000*
+   *API available at http://localhost:8000*
 
-## 2. Start the Frontend Application
-The frontend provides the user interface.
-
-1. Open a **new** terminal window.
-2. Navigate to the `frontend` folder:
+### 2. Start the Frontend
+1. Open a **new** terminal.
+2. Navigate to frontend:
    ```bash
    cd frontend
    ```
-3. Start the development server:
+3. Start the dev server:
    ```bash
    npm run dev
    ```
-4. Open your browser and go to: **http://localhost:3000**
+4. Open: **http://localhost:3000**
 
-## 3. How to Use DailyCook
+---
+
+## How to Use DailyCook
+
+### 🔐 Login / Signup
+- Click "Login" in the navigation.
+- Use test credentials: `test@test.com` / `test123`
+- Or sign up for a new account.
+
+### 📊 Dashboard
+- View today's nutrition summary.
+- Track goal progress (calories, protein, etc.).
+- Access quick actions for logging meals.
 
 ### 🥗 Smart Fridge
-- Click on "Fridge" in the navigation.
-- Enter ingredients separated by commas (e.g., "chicken, rice, peppers").
-- Click "Find Recipes".
-- The AI will generate a custom recipe or match one from the database!
+- Enter ingredients (e.g., "chicken, rice, peppers").
+- Get matching recipes or AI-generated ones.
 
 ### 💪 Fitness Kitchen
-- Choose your goal: **Fat Loss**, **Muscle Gain**, or **Maintenance**.
-- Browse tailored recipes with macro breakdowns.
-- Use the "Generate Random" button for instant ideas.
+- Choose goal: **Fat Loss**, **Muscle Gain**, or **Maintenance**.
+- Browse macro-optimized recipes.
 
-### 🌍 Cuisine Explorer
-- Select a cuisine tab (e.g., Indian, Japanese).
-- Browse mocked authentic recipes or generate new ones.
+### ❤️ Favorites
+- Save recipes you love.
+- Quick access from Favorites page.
 
-### 🍹 Drinks Bar
-- Filter by category (Healthy, Energy, etc.).
-- Get AI-powered drink recommendations.
+### 🛡️ Admin Panel (Admin Only)
+- Login as `admin@dailycook.com` / `admin123`
+- Navigate to `/admin`
+- View user stats, manage users.
+
+---
 
 ## Troubleshooting
-- **AI Error**: If recipes fail to generate, check your `backend/.env` file and ensure `GEMINI_API_KEY` is valid.
-- **Connection Refused**: Ensure the backend terminal is running without errors.
+- **401 Errors**: Token expired. Log out and log in again.
+- **AI Error**: Check `GEMINI_API_KEY` in backend `.env`.
+- **Connection Refused**: Ensure backend terminal is running.
