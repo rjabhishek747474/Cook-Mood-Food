@@ -17,6 +17,10 @@ async_session = sessionmaker(
 async def create_db_and_tables():
     """Create all database tables"""
     from models.history import CookingHistory  # Import to register models
+    from models.user import User, UserProfile  # Auth models
+    from models.meal_log import MealLog  # Meal logging
+    from models.favorite import Favorite  # Favorites
+    from models.goal import Goal  # Goals
     async with engine.begin() as conn:
         await conn.run_sync(SQLModel.metadata.create_all)
 

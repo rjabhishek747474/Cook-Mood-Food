@@ -6,7 +6,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 
-from routes import fridge, fitness, cuisine, drinks, daily, history, ai
+from routes import fridge, fitness, cuisine, drinks, daily, history, ai, auth, meals, favorites, goals, dashboard, admin
 from database import create_db_and_tables
 from dotenv import load_dotenv
 
@@ -43,6 +43,12 @@ app.include_router(drinks.router, prefix="/api/drinks", tags=["Drinks"])
 app.include_router(daily.router, prefix="/api/daily", tags=["Recipe of the Day"])
 app.include_router(history.router, prefix="/api/history", tags=["History"])
 app.include_router(ai.router, prefix="/api/ai", tags=["AI Generation"])
+app.include_router(auth.router, prefix="/api/auth", tags=["Authentication"])
+app.include_router(meals.router, prefix="/api/meals", tags=["Meal Logging"])
+app.include_router(favorites.router, prefix="/api/favorites", tags=["Favorites"])
+app.include_router(goals.router, prefix="/api/goals", tags=["Goals"])
+app.include_router(dashboard.router, prefix="/api/dashboard", tags=["Dashboard"])
+app.include_router(admin.router, prefix="/api/admin", tags=["Admin"])
 
 @app.get("/")
 async def root():
