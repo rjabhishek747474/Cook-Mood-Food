@@ -78,5 +78,7 @@ Open http://localhost:3000 - done!
 
 ## Troubleshooting
 - **401 Errors**: Token expired. Log out and log in again.
-- **AI Error**: Check `GEMINI_API_KEY` in backend `.env`.
+- **AI Generaton**: If AI quota is exceeded, the system now automatically falls back to a **Backup Generator** to ensure you still receive a valid recipe.
+- **AI Error**: Check `GEMINI_API_KEY` in backend `.env` if you want unique AI recipes.
+
 - **Connection Refused**: Ensure backend terminal is running.
