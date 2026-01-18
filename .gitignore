@@ -20,3 +20,7 @@ coverage/
 .vscode/
 .idea/
 *.log
+
+# Database
+*.db
+backend/data/*.db

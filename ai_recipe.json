@@ -1,1 +1,57 @@
-﻿{"recipe":{"id":"ai-lamb-yogurt-onion","name":"Quick Lamb Dahi Pyaaz (Yogurt Onion Lamb)","cuisine":"Indian","category":"food","fitness_tags":["high_protein","balanced"],"diet":"non-veg","difficulty":"Easy","time_minutes":20,"required_ingredients":["Lamb (250g, boneless, 1-inch cubes)","Yogurt (1/2 cup, plain, whisked)","Onion (1 large, finely chopped)","Tomato (1 medium, finely chopped)","Ginger (1 tbsp, minced)","Garlic (1 tbsp, minced)","Garam Masala (1 tsp)","Cooking oil (2 tbsp)","Salt (to taste)","Water (1/4 cup, if needed)","Turmeric powder (1/2 tsp)","Red Chili powder (1/2 tsp, adjust to taste)","Cumin powder (1 tsp)","Coriander powder (1 tsp)"],"optional_ingredients":[],"cookware":["Heavy-bottomed pan or kadai"],"steps":["Heat oil in pan. SautÃ© onion until light golden.","Add ginger-garlic paste. Cook for one minute.","Stir in tomato, salt, turmeric, chili, cumin, coriander powders.","Cook masala until oil separates (2-3 minutes).","Add lamb. Sear until browned. Pour in whisked yogurt gradually.","Simmer covered 10-12 minutes until lamb is tender. Stir in garam masala."],"common_mistakes":["Adding cold yogurt directly to hot curry, causing it to curdle. Whisk and add gradually on low heat.","Undercooking the lamb, leaving it tough. Ensure small pieces are used for quicker cooking."],"nutrition":{"calories":380,"protein_g":35,"carbs_g":15,"fats_g":20},"servings":2,"cooking_impact":"Searing lamb locks in flavor; slow simmering with yogurt tenderizes meat."},"ai_generated":true,"message":"AI-generated recipe using: lamb, yogurt, onion, tomato, ginger, garlic, garam masala"}
+﻿{
+    "recipe": {
+        "id": "ai-lamb-yogurt-onion",
+        "name": "Quick Lamb Dahi Pyaaz (Yogurt Onion Lamb)",
+        "cuisine": "Indian",
+        "category": "food",
+        "fitness_tags": [
+            "high_protein",
+            "balanced"
+        ],
+        "diet": "non-veg",
+        "difficulty": "Easy",
+        "time_minutes": 20,
+        "required_ingredients": [
+            "Lamb (250g, boneless, 1-inch cubes)",
+            "Yogurt (1/2 cup, plain, whisked)",
+            "Onion (1 large, finely chopped)",
+            "Tomato (1 medium, finely chopped)",
+            "Ginger (1 tbsp, minced)",
+            "Garlic (1 tbsp, minced)",
+            "Garam Masala (1 tsp)",
+            "Cooking oil (2 tbsp)",
+            "Salt (to taste)",
+            "Water (1/4 cup, if needed)",
+            "Turmeric powder (1/2 tsp)",
+            "Red Chili powder (1/2 tsp, adjust to taste)",
+            "Cumin powder (1 tsp)",
+            "Coriander powder (1 tsp)"
+        ],
+        "optional_ingredients": [],
+        "cookware": [
+            "Heavy-bottomed pan or kadai"
+        ],
+        "steps": [
+            "Heat oil in pan. Sauté onion until light golden.",
+            "Add ginger-garlic paste. Cook for one minute.",
+            "Stir in tomato, salt, turmeric, chili, cumin, coriander powders.",
+            "Cook masala until oil separates (2-3 minutes).",
+            "Add lamb. Sear until browned. Pour in whisked yogurt gradually.",
+            "Simmer covered 10-12 minutes until lamb is tender. Stir in garam masala."
+        ],
+        "common_mistakes": [
+            "Adding cold yogurt directly to hot curry, causing it to curdle. Whisk and add gradually on low heat.",
+            "Undercooking the lamb, leaving it tough. Ensure small pieces are used for quicker cooking."
+        ],
+        "nutrition": {
+            "calories": 380,
+            "protein_g": 35,
+            "carbs_g": 15,
+            "fats_g": 20
+        },
+        "servings": 2,
+        "cooking_impact": "Searing lamb locks in flavor; slow simmering with yogurt tenderizes meat."
+    },
+    "ai_generated": true,
+    "message": "AI-generated recipe using: lamb, yogurt, onion, tomato, ginger, garlic, garam masala"
+}

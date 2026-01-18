@@ -20,10 +20,18 @@
 - **Favorites**: Save and quickly access loved recipes.
 - **Admin Panel**: User management and system statistics.
 
-### 🌍 More Features
+### 📱 Mobile Experience (NEW)
+- **Responsive Design**: Optimized for all devices with touch-friendly navigation.
+- **App-Like Feel**: Native-style transitions, sticky headers, and safe-area support.
+- **PWA Ready**: Installable as a progressive web app.
+
+### 🎨 Visual & AI Enhancements
+- **Aesthetic Design**: Warm "Yellow Theme" with professional food doodle patterns.
+- **Reliable AI**: Robust generation with smart fallback system ensures you always get a recipe.
 - **Global Cuisine**: Authentic recipes from India, Japan, Italy, Mexico, and more.
 - **Drinks Bar**: Healthy smoothies, energy boosters, and detox drinks.
 - **History & Insights**: Track cooking history and visualize trends.
+
 
 ---
 
