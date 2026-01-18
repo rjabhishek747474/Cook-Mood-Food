@@ -22,16 +22,34 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} font-sans antialiased bg-background`} suppressHydrationWarning>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)" />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" href="/icon-192.png" />
+      </head>
+      <body className={`${inter.variable} font-sans antialiased bg-background tap-highlight-none`} suppressHydrationWarning>
         <Providers>
-          <div className="min-h-screen pb-20 md:pb-0">
+          <div className="min-h-screen min-h-[100dvh] pb-20 safe-bottom">
+            {/* Desktop header - hidden on mobile */}
             <header className="hidden md:block border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
               <div className="max-w-4xl mx-auto px-4 py-4">
                 <a href="/" className="text-xl font-bold text-primary">🍳 DailyCook</a>
               </div>
             </header>
+
+            {/* Mobile header - visible only on mobile */}
+            <header className="md:hidden mobile-header border-b bg-background/95 backdrop-blur sticky top-0 z-50 safe-top">
+              <div className="px-4 py-3 flex items-center justify-center">
+                <a href="/" className="text-lg font-bold text-primary">🍳 DailyCook</a>
+              </div>
+            </header>
+
             <NavBar />
-            <main className="max-w-4xl mx-auto px-4 py-6 md:py-8">
+            <main className="max-w-4xl mx-auto px-4 py-4 md:py-8">
               {children}
             </main>
           </div>

@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { useQuery, useMutation } from '@tanstack/react-query';
-import { getFitnessRecipes, getRecipeDetail, Recipe, RecipeCard as RecipeCardType } from '@/lib/api';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { getFitnessRecipes, getRecipeDetail, Recipe, RecipeCard as RecipeCardType, saveToHistory } from '@/lib/api';
 import { RecipeCard } from '@/components/RecipeCard';
 import { RecipeDetail } from '@/components/RecipeDetail';
 import { Button } from '@/components/ui/button';
@@ -26,6 +26,8 @@ export default function FitnessPage() {
     const [goal, setGoal] = useState<Goal>('muscle_gain');
     const [selectedRecipeId, setSelectedRecipeId] = useState<string | null>(null);
     const [aiRecommendation, setAiRecommendation] = useState<any>(null);
+    const [savingRecipeId, setSavingRecipeId] = useState<string | null>(null);
+    const queryClient = useQueryClient();
 
     const { data, isLoading, error, refetch } = useQuery({
         queryKey: ['fitness', goal],
@@ -49,6 +51,22 @@ export default function FitnessPage() {
         },
     });
 
+    const saveMutation = useMutation({
+        mutationFn: (recipe: RecipeCardType) => saveToHistory(recipe.id, recipe.required_ingredients),
+        onSuccess: () => {
+            setSavingRecipeId(null);
+            alert('Added to your cooking history! 🎉');
+        },
+        onError: () => {
+            setSavingRecipeId(null);
+        }
+    });
+
+    const handleMadeThis = (recipe: RecipeCardType) => {
+        setSavingRecipeId(recipe.id);
+        saveMutation.mutate(recipe);
+    };
+
     // Show recipe detail if selected
     if (selectedRecipeId && recipeDetail) {
         return (
@@ -56,6 +74,9 @@ export default function FitnessPage() {
                 <RecipeDetail
                     recipe={recipeDetail}
                     onBack={() => setSelectedRecipeId(null)}
+                    onCook={() => saveMutation.mutate(recipeDetail)}
+                    isSaving={saveMutation.isPending}
+                    isSaved={saveMutation.isSuccess}
                 />
             </div>
         );
@@ -170,6 +191,8 @@ export default function FitnessPage() {
                             recipe={recipe}
                             onClick={() => setSelectedRecipeId(recipe.id)}
                             showNutrition
+                            onMadeThis={handleMadeThis}
+                            isSaving={savingRecipeId === recipe.id}
                         />
                     ))}
                 </div>

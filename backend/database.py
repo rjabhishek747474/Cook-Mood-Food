@@ -21,6 +21,7 @@ async def create_db_and_tables():
     from models.meal_log import MealLog  # Meal logging
     from models.favorite import Favorite  # Favorites
     from models.goal import Goal  # Goals
+    from models.recipe_counts import RecipeCounts  # Recipe counts
     async with engine.begin() as conn:
         await conn.run_sync(SQLModel.metadata.create_all)
 

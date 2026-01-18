@@ -3,25 +3,44 @@
 import { RecipeCard as RecipeCardType } from '@/lib/api';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { NutritionBadge } from './NutritionBadge';
-import { Clock, ChefHat, Users } from 'lucide-react';
+import { Clock, ChefHat, Users, Flame, Loader2 } from 'lucide-react';
 
 interface RecipeCardProps {
     recipe: RecipeCardType;
     onClick?: () => void;
     showNutrition?: boolean;
+    madeCount?: number;
+    onMadeThis?: (recipe: RecipeCardType) => void;
+    isSaving?: boolean;
 }
 
-export function RecipeCard({ recipe, onClick, showNutrition = true }: RecipeCardProps) {
+export function RecipeCard({ recipe, onClick, showNutrition = true, madeCount, onMadeThis, isSaving }: RecipeCardProps) {
+    const handleMadeThis = (e: React.MouseEvent) => {
+        e.stopPropagation(); // Prevent card click
+        if (onMadeThis) {
+            onMadeThis(recipe);
+        }
+    };
+
     return (
         <Card
-            className="cursor-pointer hover:shadow-lg transition-all duration-200 hover:scale-[1.02] border-2 hover:border-primary/50"
+            className="cursor-pointer hover:shadow-lg transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] border-2 hover:border-primary/50 tap-highlight-none"
             onClick={onClick}
         >
             <CardHeader className="pb-2">
                 <div className="flex items-start justify-between gap-2">
                     <CardTitle className="text-lg font-semibold leading-tight">{recipe.name}</CardTitle>
-                    <Badge variant="outline" className="shrink-0">{recipe.cuisine}</Badge>
+                    <div className="flex flex-col items-end gap-1">
+                        <Badge variant="outline" className="shrink-0">{recipe.cuisine}</Badge>
+                        {madeCount !== undefined && madeCount > 0 && (
+                            <Badge variant="secondary" className="text-xs">
+                                <Flame className="h-3 w-3 mr-1" />
+                                {madeCount} made
+                            </Badge>
+                        )}
+                    </div>
                 </div>
             </CardHeader>
             <CardContent className="space-y-3">
@@ -54,6 +73,28 @@ export function RecipeCard({ recipe, onClick, showNutrition = true }: RecipeCard
                 {showNutrition && (
                     <div className="pt-2">
                         <NutritionBadge nutrition={recipe.nutrition} showAll={false} size="sm" />
+                    </div>
+                )}
+
+                {/* I Made This Button */}
+                {onMadeThis && (
+                    <div className="pt-2">
+                        <Button
+                            size="sm"
+                            variant="secondary"
+                            className="w-full"
+                            onClick={handleMadeThis}
+                            disabled={isSaving}
+                        >
+                            {isSaving ? (
+                                <>
+                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                    Saving...
+                                </>
+                            ) : (
+                                'I Made This! 🍳'
+                            )}
+                        </Button>
                     </div>
                 )}
             </CardContent>

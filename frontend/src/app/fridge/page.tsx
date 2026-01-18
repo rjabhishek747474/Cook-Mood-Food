@@ -40,11 +40,13 @@ export default function FridgePage() {
     };
 
     const handleCook = () => {
-        if (recipeDetail) {
+        if (recipeDetail && !saveMutation.isPending) {
             saveMutation.mutate(recipeDetail, {
                 onSuccess: () => {
-                    alert('Recipe saved to history! 🎉');
-                    setSelectedRecipeId(null);
+                    // Show success briefly, then go back
+                    setTimeout(() => {
+                        setSelectedRecipeId(null);
+                    }, 1500);
                 },
             });
         }
@@ -58,6 +60,8 @@ export default function FridgePage() {
                     recipe={recipeDetail}
                     onBack={() => setSelectedRecipeId(null)}
                     onCook={handleCook}
+                    isSaving={saveMutation.isPending}
+                    isSaved={saveMutation.isSuccess}
                 />
             </div>
         );

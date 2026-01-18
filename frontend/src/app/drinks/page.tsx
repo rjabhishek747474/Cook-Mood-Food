@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button';
 import { NutritionBadge } from '@/components/NutritionBadge';
 import { Wine, Loader2, Clock, AlertTriangle, ArrowLeft, Sparkles, Zap } from 'lucide-react';
 
-type Category = 'healthy' | 'energy' | 'protein' | 'detox' | 'refreshing' | 'traditional' | '';
+type Category = 'healthy' | 'energy' | 'protein' | 'detox' | 'refreshing' | 'traditional' | 'alcoholic' | '';
 
 const categories = [
     { value: '' as Category, label: 'All', emoji: '🍹' },
@@ -20,6 +20,7 @@ const categories = [
     { value: 'protein' as Category, label: 'Protein', emoji: '💪' },
     { value: 'detox' as Category, label: 'Detox', emoji: '🌿' },
     { value: 'refreshing' as Category, label: 'Refresh', emoji: '❄️' },
+    { value: 'alcoholic' as Category, label: 'Alcoholic', emoji: '🍸' },
 ];
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
@@ -201,7 +202,7 @@ export default function DrinksPage() {
 
             {/* Category Selector */}
             <Tabs value={category} onValueChange={(v) => { setCategory(v as Category); setAiRecommendation(null); }}>
-                <TabsList className="grid grid-cols-6 w-full">
+                <TabsList className="grid grid-cols-7 w-full">
                     {categories.map(({ value, label, emoji }) => (
                         <TabsTrigger key={value} value={value} className="gap-1 px-2">
                             <span>{emoji}</span>

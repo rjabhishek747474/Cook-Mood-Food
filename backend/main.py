@@ -5,6 +5,7 @@ Utility-first recipe generator focused on execution
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
+import os
 
 from routes import fridge, fitness, cuisine, drinks, daily, history, ai, auth, meals, favorites, goals, dashboard, admin
 from database import create_db_and_tables
@@ -26,10 +27,13 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-# CORS middleware for frontend
+# CORS middleware - configurable for production
+cors_origins_str = os.getenv("CORS_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000")
+cors_origins = [origin.strip() for origin in cors_origins_str.split(",")]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000"],
+    allow_origins=cors_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

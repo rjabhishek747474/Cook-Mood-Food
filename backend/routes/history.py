@@ -40,7 +40,10 @@ async def save_to_history(
     """
     Save a cooked recipe to history.
     Auto-saves recipe with date, ingredients, and nutrition.
+    Also increments the made_count for the recipe.
     """
+    from models.recipe_counts import RecipeCounts
+    
     # Get recipe details
     recipe = recipe_engine.get_recipe_detail(request.recipe_id)
     if not recipe:
@@ -59,10 +62,27 @@ async def save_to_history(
     )
     
     session.add(entry)
+    
+    # Update recipe counts
+    counts_statement = select(RecipeCounts).where(RecipeCounts.recipe_id == recipe.id)
+    result = await session.execute(counts_statement)
+    counts = result.scalar_one_or_none()
+    
+    if counts:
+        counts.made_count += 1
+        counts.last_made = datetime.utcnow()
+    else:
+        counts = RecipeCounts(
+            recipe_id=recipe.id,
+            made_count=1,
+            loved_count=0
+        )
+        session.add(counts)
+    
     await session.commit()
     await session.refresh(entry)
     
-    return {"message": "Recipe saved to history", "id": entry.id}
+    return {"message": "Recipe saved to history", "id": entry.id, "made_count": counts.made_count}
 
 @router.get("/", response_model=HistoryResponse)
 async def get_history(
@@ -200,3 +220,29 @@ async def delete_history_entry(
     await session.commit()
     
     return {"message": "Entry deleted"}
+
+
+@router.get("/counts/{recipe_id}")
+async def get_recipe_counts(
+    recipe_id: str,
+    session: AsyncSession = Depends(get_session)
+):
+    """Get made/loved counts for a recipe"""
+    from models.recipe_counts import RecipeCounts
+    
+    statement = select(RecipeCounts).where(RecipeCounts.recipe_id == recipe_id)
+    result = await session.execute(statement)
+    counts = result.scalar_one_or_none()
+    
+    if counts:
+        return {
+            "recipe_id": recipe_id,
+            "made_count": counts.made_count,
+            "loved_count": counts.loved_count
+        }
+    
+    return {
+        "recipe_id": recipe_id,
+        "made_count": 0,
+        "loved_count": 0
+    }

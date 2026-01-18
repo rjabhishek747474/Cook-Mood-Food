@@ -12,7 +12,7 @@ from models.recipe import Drink
 
 router = APIRouter()
 
-DRINK_CATEGORIES = ["healthy", "energy", "protein", "detox", "refreshing", "traditional"]
+DRINK_CATEGORIES = ["healthy", "energy", "protein", "detox", "refreshing", "traditional", "alcoholic"]
 
 CATEGORY_DESCRIPTIONS = {
     "healthy": "Nutrient-rich smoothies and wellness drinks",
@@ -20,7 +20,8 @@ CATEGORY_DESCRIPTIONS = {
     "protein": "High-protein shakes for muscle recovery",
     "detox": "Cleansing drinks for digestion and hydration",
     "refreshing": "Cool, hydrating drinks for hot days",
-    "traditional": "Classic Indian beverages - lassi, chaas, nimbu pani"
+    "traditional": "Classic Indian beverages - lassi, chaas, nimbu pani",
+    "alcoholic": "Cocktails and spirits - drink responsibly"
 }
 
 class DrinksResponse(BaseModel):

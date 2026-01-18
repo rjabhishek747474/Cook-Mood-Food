@@ -80,10 +80,24 @@ async def create_recipes(request: FridgeRequest):
                 serving_size=serving_size
             )
             
+            using_backup = False
+            
+            # If AI fails (returns None), use backup generator
+            if not ai_recipe:
+                print("AI generation failed/returned None. Using backup generator.")
+                from services.backup_generator import generate_backup_recipe
+                ai_recipe = generate_backup_recipe(
+                    ingredients=normalized,
+                    diet=request.diet,
+                    servings=servings,
+                    serving_size=serving_size
+                )
+                using_backup = True
+            
             if ai_recipe:
-                print(f"AI Creation: Successfully created: {ai_recipe.name}")
+                print(f"Creation successful: {ai_recipe.name} (Backup: {using_backup})")
                 
-                # Convert to RecipeCard format
+                # Convert to RecipeCard
                 ai_card = RecipeCard(
                     id=ai_recipe.id,
                     name=ai_recipe.name,
@@ -99,7 +113,7 @@ async def create_recipes(request: FridgeRequest):
                 # Store AI recipe in engine cache for later retrieval
                 recipe_engine._ai_recipes[ai_recipe.id] = ai_recipe
                 
-                # Extract suggestions from AI response (stored in recipe object)
+                # Extract suggestions
                 suggested_ingredients = getattr(ai_recipe, 'suggested_ingredients', []) or []
                 recipe_suggestions_raw = getattr(ai_recipe, 'recipe_suggestions', []) or []
                 
@@ -118,25 +132,28 @@ async def create_recipes(request: FridgeRequest):
                     available=normalized,
                     max_missing=2,
                     diet=request.diet
-                )[:2]  # Max 2 database suggestions
+                )[:2]
                 
                 all_recipes = [ai_card] + db_recipes
+                
+                msg_prefix = "✨ Created" if not using_backup else "Created"
+                msg_suffix = "" if not using_backup else " (AI unavailable, using backup)"
                 
                 return FridgeResponse(
                     normalized_ingredients=normalized,
                     recipes=all_recipes,
-                    message=f"✨ Created '{ai_recipe.name}' for {servings} people ({serving_size}g/serving)",
-                    ai_generated=True,
+                    message=f"{msg_prefix} '{ai_recipe.name}' for {servings} people{msg_suffix}",
+                    ai_generated=not using_backup,
                     suggested_ingredients=suggested_ingredients[:6],
                     recipe_suggestions=recipe_suggestions
                 )
                 
         except Exception as e:
-            print(f"AI creation failed: {e}")
+            print(f"AI/Backup creation failed: {e}")
             import traceback
             traceback.print_exc()
-    
-    # Fallback: Search database if AI is unavailable (shouldn't happen often)
+
+    # Fallback: Search database (last resort)
     recipes = recipe_engine.match_by_ingredients(
         available=normalized,
         max_missing=2,

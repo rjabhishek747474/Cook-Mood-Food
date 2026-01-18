@@ -6,15 +6,17 @@ import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { NutritionBadge } from './NutritionBadge';
-import { Clock, ChefHat, Users, AlertTriangle, Check } from 'lucide-react';
+import { Clock, ChefHat, Users, AlertTriangle, Check, Loader2, CheckCircle } from 'lucide-react';
 
 interface RecipeDetailProps {
     recipe: Recipe;
     onCook?: () => void;
     onBack?: () => void;
+    isSaving?: boolean;
+    isSaved?: boolean;
 }
 
-export function RecipeDetail({ recipe, onCook, onBack }: RecipeDetailProps) {
+export function RecipeDetail({ recipe, onCook, onBack, isSaving, isSaved }: RecipeDetailProps) {
     return (
         <div className="space-y-6">
             {/* Header */}
@@ -140,8 +142,14 @@ export function RecipeDetail({ recipe, onCook, onBack }: RecipeDetailProps) {
                     </Button>
                 )}
                 {onCook && (
-                    <Button onClick={onCook} className="flex-1">
-                        I Cooked This! ✓
+                    <Button
+                        onClick={onCook}
+                        className={`flex-1 ${isSaved ? 'bg-green-600 hover:bg-green-600' : ''}`}
+                        disabled={isSaving || isSaved}
+                    >
+                        {isSaving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                        {isSaved && <CheckCircle className="mr-2 h-4 w-4" />}
+                        {isSaved ? 'Added to History! 🎉' : isSaving ? 'Saving...' : 'I Cooked This! ✓'}
                     </Button>
                 )}
             </div>
