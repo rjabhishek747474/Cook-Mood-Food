@@ -11,6 +11,11 @@ from routes import fridge, fitness, cuisine, drinks, daily, history, ai, auth, m
 from database import create_db_and_tables
 from dotenv import load_dotenv
 
+# Advanced Features
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
+
 # Load environment variables
 load_dotenv()
 
@@ -18,7 +23,21 @@ load_dotenv()
 async def lifespan(app: FastAPI):
     """Initialize database on startup"""
     await create_db_and_tables()
+    
+    # Try to init Redis Cache, but don't fail if Redis is not available
+    try:
+        from fastapi_cache import FastAPICache
+        from fastapi_cache.backends.redis import RedisBackend
+        from redis import asyncio as aioredis
+        redis = aioredis.from_url(os.getenv("REDIS_URL", "redis://localhost:6379"), encoding="utf8", decode_responses=True)
+        await redis.ping()  # Test connection
+        FastAPICache.init(RedisBackend(redis), prefix="dailycook-cache")
+        print("Redis cache initialized")
+    except Exception as e:
+        print(f"Redis not available, running without cache: {e}")
     yield
+
+limiter = Limiter(key_func=get_remote_address)
 
 app = FastAPI(
     title="DailyCook API",
@@ -26,6 +45,10 @@ app = FastAPI(
     version="1.0.0",
     lifespan=lifespan
 )
+
+# Apply Rate Limit Exception Handler
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # CORS middleware - configurable for production
 cors_origins_str = os.getenv("CORS_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000")

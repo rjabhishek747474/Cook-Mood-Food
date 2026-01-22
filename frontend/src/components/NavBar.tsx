@@ -36,22 +36,22 @@ export function NavBar() {
     const navItems = mounted && isAuthenticated ? authNavItems : publicNavItems;
 
     return (
-        <nav className="fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur border-t z-50 md:static md:border-t-0 md:border-b bottom-nav-safe">
+        <nav className="fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur border-t-3 border-foreground z-50 md:static md:border-t-0 md:border-b-3 bottom-nav-safe">
             <div className="max-w-4xl mx-auto">
-                <ul className="flex justify-around md:justify-center md:gap-6">
+                <ul className="flex justify-around md:justify-center md:gap-1">
                     {navItems.map(({ href, label, icon: Icon }) => (
                         <li key={href}>
                             <Link
                                 href={href}
                                 className={cn(
-                                    'flex flex-col items-center gap-1 px-3 py-2 text-xs md:text-sm transition-colors touch-target select-none',
+                                    'flex flex-col items-center gap-1 px-3 py-2 text-xs md:text-sm transition-all touch-target select-none border-b-3 border-transparent',
                                     pathname === href || pathname.startsWith(href + '/')
-                                        ? 'text-primary font-medium'
-                                        : 'text-muted-foreground hover:text-foreground active:text-primary'
+                                        ? 'text-foreground font-bold border-b-primary bg-primary/10'
+                                        : 'text-muted-foreground hover:text-foreground hover:bg-primary/5 active:bg-primary/10'
                                 )}
                             >
-                                <Icon className="h-6 w-6 md:h-5 md:w-5" />
-                                <span className="text-[11px] md:text-sm">{label}</span>
+                                <Icon className="h-5 w-5 md:h-5 md:w-5" />
+                                <span className="text-[10px] md:text-xs uppercase font-semibold tracking-wide">{label}</span>
                             </Link>
                         </li>
                     ))}
@@ -62,14 +62,14 @@ export function NavBar() {
                             <Link
                                 href="/login"
                                 className={cn(
-                                    'flex flex-col items-center gap-1 px-3 py-2 text-xs md:text-sm transition-colors touch-target select-none',
+                                    'flex flex-col items-center gap-1 px-3 py-2 text-xs md:text-sm transition-all touch-target select-none border-b-3 border-transparent',
                                     pathname === '/login' || pathname === '/signup'
-                                        ? 'text-primary font-medium'
-                                        : 'text-muted-foreground hover:text-foreground active:text-primary'
+                                        ? 'text-foreground font-bold border-b-primary bg-primary/10'
+                                        : 'text-muted-foreground hover:text-foreground hover:bg-primary/5 active:bg-primary/10'
                                 )}
                             >
-                                <LogIn className="h-6 w-6 md:h-5 md:w-5" />
-                                <span className="text-[11px] md:text-sm">Login</span>
+                                <LogIn className="h-5 w-5 md:h-5 md:w-5" />
+                                <span className="text-[10px] md:text-xs uppercase font-semibold tracking-wide">Login</span>
                             </Link>
                         </li>
                     )}
@@ -78,4 +78,3 @@ export function NavBar() {
         </nav>
     );
 }
-

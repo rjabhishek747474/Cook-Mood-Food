@@ -1,16 +1,14 @@
 # syntax=docker/dockerfile:1
-FROM python:3.12-slim
+FROM python:3.12
 
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc \
-    && rm -rf /var/lib/apt/lists/*
+# Install system dependencies (optional, full image has most)
+# Removing apt-get block as full image has compiler
 
 # Copy requirements and install dependencies
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt -v
 
 # Copy application code
 COPY . .

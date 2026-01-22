@@ -1,106 +1,67 @@
 'use client';
-
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { login, useAuthStore } from '@/lib/auth';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Loader2, ChefHat } from 'lucide-react';
+import { SignIn } from "@clerk/nextjs";
 
 export default function LoginPage() {
-    const router = useRouter();
-    const setAuth = useAuthStore((state) => state.setAuth);
-
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setError('');
-        setIsLoading(true);
-
-        try {
-            const { token, user } = await login(email, password);
-            setAuth(token, user);
-            router.push('/dashboard');
-        } catch (err) {
-            setError(err instanceof Error ? err.message : 'Login failed');
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
     return (
-        <div className="min-h-[80vh] flex items-center justify-center">
-            <Card className="w-full max-w-md">
-                <CardHeader className="text-center">
-                    <div className="flex justify-center mb-2">
-                        <div className="p-3 rounded-full bg-primary/10">
-                            <ChefHat className="h-8 w-8 text-primary" />
-                        </div>
+        <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-b from-primary/20 to-background">
+            {/* Full-width background pattern */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,214,0,0.1)_0%,transparent_50%)]" />
+
+            <div className="relative w-full max-w-lg mx-auto p-4 sm:p-6">
+                {/* Header */}
+                <div className="text-center mb-8">
+                    <div className="inline-block -rotate-2 mb-4">
+                        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight bg-primary px-6 py-3 border-3 border-foreground shadow-[6px_6px_0_0_hsl(var(--foreground))]">
+                            🍳 DailyCook
+                        </h1>
                     </div>
-                    <CardTitle className="text-2xl">Welcome Back</CardTitle>
-                    <CardDescription>Sign in to your DailyCook account</CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <form onSubmit={handleSubmit} className="space-y-4">
-                        {error && (
-                            <Alert variant="destructive">
-                                <AlertDescription>{error}</AlertDescription>
-                            </Alert>
-                        )}
+                    <p className="text-muted-foreground uppercase tracking-widest text-sm font-medium">
+                        Sign in with Google to continue
+                    </p>
+                </div>
 
-                        <div className="space-y-2">
-                            <label htmlFor="email" className="text-sm font-medium">Email</label>
-                            <Input
-                                id="email"
-                                type="email"
-                                placeholder="you@example.com"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                                disabled={isLoading}
-                            />
-                        </div>
+                {/* Auth Card */}
+                <div className="border-3 border-foreground bg-card p-6 sm:p-8 shadow-[8px_8px_0_0_hsl(var(--foreground))]">
+                    <SignIn
+                        appearance={{
+                            elements: {
+                                rootBox: "w-full",
+                                card: "shadow-none border-0 p-0 bg-transparent w-full",
+                                headerTitle: "hidden",
+                                headerSubtitle: "hidden",
+                                socialButtonsBlockButton: "w-full border-3 border-foreground font-bold uppercase tracking-wide py-4 text-base hover:bg-primary hover:shadow-[4px_4px_0_0_hsl(var(--foreground))] transition-all bg-background",
+                                socialButtonsBlockButtonText: "font-bold text-foreground",
+                                socialButtonsProviderIcon: "w-6 h-6",
+                                dividerLine: "bg-foreground h-[2px]",
+                                dividerText: "text-muted-foreground uppercase tracking-widest text-xs bg-card px-4",
+                                formButtonPrimary: "bg-[#E85C3D] hover:bg-[#E85C3D]/90 border-3 border-foreground font-bold uppercase tracking-wide py-4 text-base shadow-[4px_4px_0_0_hsl(var(--foreground))] hover:shadow-[6px_6px_0_0_hsl(var(--foreground))]",
+                                formFieldInput: "border-3 border-foreground focus:shadow-[4px_4px_0_0_hsl(var(--primary))] py-3",
+                                formFieldLabel: "font-bold uppercase tracking-wide text-xs",
+                                footerAction: "hidden",
+                                footer: "hidden",
+                                identityPreview: "border-3 border-foreground bg-section-blue",
+                                identityPreviewText: "font-bold",
+                                identityPreviewEditButton: "text-primary font-bold uppercase",
+                            }
+                        }}
+                        routing="path"
+                        path="/login"
+                        signUpUrl="/signup"
+                    />
+                </div>
 
-                        <div className="space-y-2">
-                            <label htmlFor="password" className="text-sm font-medium">Password</label>
-                            <Input
-                                id="password"
-                                type="password"
-                                placeholder="••••••••"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                                disabled={isLoading}
-                            />
-                        </div>
+                {/* Footer Link */}
+                <p className="text-center text-sm text-muted-foreground mt-6">
+                    Don&apos;t have an account?{' '}
+                    <a href="/signup" className="font-bold text-foreground hover:text-primary underline underline-offset-4 transition-colors">
+                        Sign up
+                    </a>
+                </p>
 
-                        <Button type="submit" className="w-full" disabled={isLoading}>
-                            {isLoading ? (
-                                <>
-                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                    Signing in...
-                                </>
-                            ) : (
-                                'Sign In'
-                            )}
-                        </Button>
-                    </form>
-
-                    <div className="mt-6 text-center text-sm text-muted-foreground">
-                        Don&apos;t have an account?{' '}
-                        <Link href="/signup" className="text-primary hover:underline font-medium">
-                            Sign up
-                        </Link>
-                    </div>
-                </CardContent>
-            </Card>
+                {/* Decorative elements */}
+                <div className="hidden sm:block absolute -bottom-4 -left-4 w-16 h-16 bg-primary border-3 border-foreground -rotate-12 -z-10" />
+                <div className="hidden sm:block absolute -top-4 -right-4 w-12 h-12 bg-[#E85C3D] border-3 border-foreground rotate-12 -z-10" />
+            </div>
         </div>
     );
 }

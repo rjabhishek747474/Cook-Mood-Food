@@ -4,11 +4,11 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
 import { useAuthStore, getProfile, updateProfile, UserProfile } from '@/lib/auth';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardSectionBlue } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { User, Save, ArrowLeft, Loader2 } from 'lucide-react';
+import { User, Save, ArrowLeft, Loader2, Activity } from 'lucide-react';
 import Link from 'next/link';
 
 export default function ProfilePage() {
@@ -72,11 +72,13 @@ export default function ProfilePage() {
         <div className="space-y-6">
             <div className="flex items-center justify-between">
                 <div>
-                    <h1 className="text-2xl font-bold flex items-center gap-2">
-                        <User className="h-6 w-6 text-primary" />
+                    <h1 className="text-2xl font-bold flex items-center gap-2 uppercase tracking-wide">
+                        <div className="p-2 bg-primary border-3 border-foreground">
+                            <User className="h-5 w-5 text-foreground" />
+                        </div>
                         My Profile
                     </h1>
-                    <p className="text-muted-foreground">{user?.email}</p>
+                    <p className="text-muted-foreground mt-1">{user?.email}</p>
                 </div>
                 <Link href="/dashboard">
                     <Button variant="outline">
@@ -87,36 +89,36 @@ export default function ProfilePage() {
             </div>
 
             {message && (
-                <Alert className="bg-green-500/10 border-green-500">
-                    <AlertDescription>{message}</AlertDescription>
-                </Alert>
+                <div className="bg-section-green border-3 border-foreground p-4">
+                    <p className="font-medium">{message}</p>
+                </div>
             )}
 
             {error && (
-                <Alert variant="destructive">
+                <Alert variant="destructive" className="border-3 border-foreground">
                     <AlertDescription>{error}</AlertDescription>
                 </Alert>
             )}
 
-            <Card>
-                <CardHeader>
-                    <CardTitle>Profile Settings</CardTitle>
+            <Card className="border-3 border-foreground">
+                <CardHeader className="bg-primary/10">
+                    <CardTitle className="uppercase tracking-wide">Profile Settings</CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="pt-6">
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div className="space-y-2">
-                            <label htmlFor="name" className="text-sm font-medium">Name</label>
+                            <label htmlFor="name" className="text-xs font-bold uppercase tracking-wide">Name</label>
                             <Input
                                 id="name"
                                 value={profile.name || ''}
                                 onChange={(e) => setProfile({ ...profile, name: e.target.value })}
-                                placeholder="Your name"
+                                placeholder="YOUR NAME"
                             />
                         </div>
 
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-2">
-                                <label htmlFor="height" className="text-sm font-medium">Height (cm)</label>
+                                <label htmlFor="height" className="text-xs font-bold uppercase tracking-wide">Height (cm)</label>
                                 <Input
                                     id="height"
                                     type="number"
@@ -127,7 +129,7 @@ export default function ProfilePage() {
                             </div>
 
                             <div className="space-y-2">
-                                <label htmlFor="weight" className="text-sm font-medium">Weight (kg)</label>
+                                <label htmlFor="weight" className="text-xs font-bold uppercase tracking-wide">Weight (kg)</label>
                                 <Input
                                     id="weight"
                                     type="number"
@@ -140,10 +142,13 @@ export default function ProfilePage() {
                         </div>
 
                         <div className="space-y-2">
-                            <label htmlFor="activity" className="text-sm font-medium">Activity Level</label>
+                            <label htmlFor="activity" className="text-xs font-bold uppercase tracking-wide flex items-center gap-2">
+                                <Activity className="h-4 w-4" />
+                                Activity Level
+                            </label>
                             <select
                                 id="activity"
-                                className="w-full px-3 py-2 border rounded-md bg-background"
+                                className="w-full h-12 px-3 border-3 border-foreground bg-background text-sm font-medium focus:outline-none focus:shadow-[4px_4px_0_0_hsl(var(--primary))]"
                                 value={profile.activity_level || 'moderate'}
                                 onChange={(e) => setProfile({ ...profile, activity_level: e.target.value })}
                             >
@@ -154,7 +159,7 @@ export default function ProfilePage() {
                             </select>
                         </div>
 
-                        <Button type="submit" disabled={updateMutation.isPending}>
+                        <Button type="submit" disabled={updateMutation.isPending} variant="cta" size="lg" className="w-full">
                             {updateMutation.isPending ? (
                                 <>
                                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />

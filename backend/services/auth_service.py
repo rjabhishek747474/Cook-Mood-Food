@@ -1,118 +1,73 @@
 """
-Authentication service for password hashing and JWT token management
+Authentication service using Clerk and PyJWT
 """
-from datetime import datetime, timedelta
 from typing import Optional
-from jose import JWTError, jwt
-import bcrypt
+import jwt
 from fastapi import Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer
-from sqlmodel import select
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlmodel import select
 import os
 
 from database import get_session
 from models.user import User
+from services.clerk_auth import verify_clerk_token, get_user_from_clerk_token
 
-# Configuration
-SECRET_KEY = os.getenv("SECRET_KEY", "dailycook-secret-key-change-in-production-2024")
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7  # 7 days
-
-# OAuth2 scheme
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/login", auto_error=False)
-
-
-def verify_password(plain_password: str, hashed_password: str) -> bool:
-    """Verify a password against its hash"""
-    return bcrypt.checkpw(plain_password.encode('utf-8'), hashed_password.encode('utf-8'))
-
-
-def get_password_hash(password: str) -> str:
-    """Hash a password"""
-    return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-
-
-def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:
-    """Create a JWT access token"""
-    to_encode = data.copy()
-    if expires_delta:
-        expire = datetime.utcnow() + expires_delta
-    else:
-        expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
-    return encoded_jwt
-
-
-async def get_user_by_email(session: AsyncSession, email: str) -> Optional[User]:
-    """Get user by email"""
-    result = await session.execute(select(User).where(User.email == email))
-    return result.scalar_one_or_none()
-
-
-async def get_user_by_id(session: AsyncSession, user_id: int) -> Optional[User]:
-    """Get user by ID"""
-    result = await session.execute(select(User).where(User.id == user_id))
-    return result.scalar_one_or_none()
-
-
-async def authenticate_user(session: AsyncSession, email: str, password: str) -> Optional[User]:
-    """Authenticate user with email and password"""
-    user = await get_user_by_email(session, email)
-    if not user:
-        return None
-    if not verify_password(password, user.hashed_password):
-        return None
-    return user
-
+# Use HTTPBearer for standard Bearer token extraction
+security = HTTPBearer(auto_error=False)
 
 async def get_current_user(
-    token: Optional[str] = Depends(oauth2_scheme),
+    auth: Optional[HTTPAuthorizationCredentials] = Depends(security),
     session: AsyncSession = Depends(get_session)
 ) -> Optional[User]:
-    """Get current user from JWT token (returns None if not authenticated)"""
-    if not token:
+    """Get current user from Clerk token"""
+    if not auth:
         return None
     
+    token = auth.credentials
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        user_id_str = payload.get("sub")
-        if user_id_str is None:
-            return None
-        user_id = int(user_id_str)  # Convert string back to int
-    except (JWTError, ValueError):
+        # Verify with Clerk
+        payload = await verify_clerk_token(token)
+        # Get user from DB (sync or create)
+        user = await get_user_from_clerk_token(session, payload)
+        return user
+    except Exception:
         return None
-    
-    user = await get_user_by_id(session, user_id)
-    return user
-
 
 async def get_current_user_required(
-    token: Optional[str] = Depends(oauth2_scheme),
+    auth: Optional[HTTPAuthorizationCredentials] = Depends(security),
     session: AsyncSession = Depends(get_session)
 ) -> User:
-    """Get current user (raises 401 if not authenticated)"""
+    """Get current user or raise 401"""
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Not authenticated",
+        detail="Could not validate credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
     
-    if not token:
+    if not auth:
         raise credentials_exception
-    
+        
+    token = auth.credentials
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        user_id_str = payload.get("sub")
-        if user_id_str is None:
+        # Verify with Clerk
+        payload = await verify_clerk_token(token)
+        # Get user from DB
+        user = await get_user_from_clerk_token(session, payload)
+        if not user:
             raise credentials_exception
-        user_id = int(user_id_str)  # Convert string back to int
-    except (JWTError, ValueError):
+        return user
+    except Exception as e:
+        print(f"Auth error: {e}")
         raise credentials_exception
-    
-    user = await get_user_by_id(session, user_id)
-    if user is None:
-        raise credentials_exception
-    
-    return user
+
+# Deprecated functions from old implementation
+# Kept as stubs if needed, or removed if mostly unused.
+# create_access_token was used in auth.py (refactored).
+# get_password_hash / authenticate_user were used in auth.py.
+
+def get_password_hash(password: str) -> str:
+    raise NotImplementedError("Passwords managed by Clerk")
+
+async def authenticate_user(session, email, password):
+    raise NotImplementedError("Authentication managed by Clerk")

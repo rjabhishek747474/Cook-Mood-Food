@@ -11,7 +11,9 @@ services:
       - DATABASE_URL=sqlite+aiosqlite:///./data/dailycook.db
       - CORS_ORIGINS=${CORS_ORIGINS:-http://localhost:3000}
     volumes:
+      - ./backend:/app
       - backend-data:/app/data
+
     restart: unless-stopped
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8000/health" ]
@@ -27,9 +29,21 @@ services:
       - "3000:3000"
     environment:
       - NEXT_PUBLIC_API_URL=http://localhost:8000
+      - NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:-pk_test_PLACEHOLDER}
     depends_on:
       - backend
     restart: unless-stopped
 
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+
 volumes:
   backend-data:
+  redis-data:
+
+

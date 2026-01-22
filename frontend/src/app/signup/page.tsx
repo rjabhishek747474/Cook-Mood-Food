@@ -1,144 +1,67 @@
 'use client';
-
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { signup, useAuthStore } from '@/lib/auth';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Loader2, ChefHat } from 'lucide-react';
+import { SignUp } from "@clerk/nextjs";
 
 export default function SignupPage() {
-    const router = useRouter();
-    const setAuth = useAuthStore((state) => state.setAuth);
-
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [error, setError] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setError('');
-
-        if (password !== confirmPassword) {
-            setError('Passwords do not match');
-            return;
-        }
-
-        if (password.length < 6) {
-            setError('Password must be at least 6 characters');
-            return;
-        }
-
-        setIsLoading(true);
-
-        try {
-            const { token, user } = await signup(email, password, name || undefined);
-            setAuth(token, user);
-            router.push('/dashboard');
-        } catch (err) {
-            setError(err instanceof Error ? err.message : 'Signup failed');
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
     return (
-        <div className="min-h-[80vh] flex items-center justify-center">
-            <Card className="w-full max-w-md">
-                <CardHeader className="text-center">
-                    <div className="flex justify-center mb-2">
-                        <div className="p-3 rounded-full bg-primary/10">
-                            <ChefHat className="h-8 w-8 text-primary" />
-                        </div>
+        <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-b from-[#E85C3D]/10 to-background">
+            {/* Full-width background pattern */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(232,92,61,0.1)_0%,transparent_50%)]" />
+
+            <div className="relative w-full max-w-lg mx-auto p-4 sm:p-6">
+                {/* Header */}
+                <div className="text-center mb-8">
+                    <div className="inline-block rotate-2 mb-4">
+                        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight bg-[#E85C3D] text-white px-6 py-3 border-3 border-foreground shadow-[6px_6px_0_0_hsl(var(--foreground))]">
+                            🍳 DailyCook
+                        </h1>
                     </div>
-                    <CardTitle className="text-2xl">Create Account</CardTitle>
-                    <CardDescription>Start your DailyCook journey</CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <form onSubmit={handleSubmit} className="space-y-4">
-                        {error && (
-                            <Alert variant="destructive">
-                                <AlertDescription>{error}</AlertDescription>
-                            </Alert>
-                        )}
+                    <p className="text-muted-foreground uppercase tracking-widest text-sm font-medium">
+                        Create your free account
+                    </p>
+                </div>
 
-                        <div className="space-y-2">
-                            <label htmlFor="name" className="text-sm font-medium">Name (optional)</label>
-                            <Input
-                                id="name"
-                                type="text"
-                                placeholder="John Doe"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                disabled={isLoading}
-                            />
-                        </div>
+                {/* Auth Card */}
+                <div className="border-3 border-foreground bg-card p-6 sm:p-8 shadow-[8px_8px_0_0_hsl(var(--foreground))]">
+                    <SignUp
+                        appearance={{
+                            elements: {
+                                rootBox: "w-full",
+                                card: "shadow-none border-0 p-0 bg-transparent w-full",
+                                headerTitle: "hidden",
+                                headerSubtitle: "hidden",
+                                socialButtonsBlockButton: "w-full border-3 border-foreground font-bold uppercase tracking-wide py-4 text-base hover:bg-primary hover:shadow-[4px_4px_0_0_hsl(var(--foreground))] transition-all bg-background",
+                                socialButtonsBlockButtonText: "font-bold text-foreground",
+                                socialButtonsProviderIcon: "w-6 h-6",
+                                dividerLine: "bg-foreground h-[2px]",
+                                dividerText: "text-muted-foreground uppercase tracking-widest text-xs bg-card px-4",
+                                formButtonPrimary: "bg-primary hover:bg-primary/90 border-3 border-foreground font-bold uppercase tracking-wide py-4 text-base text-primary-foreground shadow-[4px_4px_0_0_hsl(var(--foreground))] hover:shadow-[6px_6px_0_0_hsl(var(--foreground))]",
+                                formFieldInput: "border-3 border-foreground focus:shadow-[4px_4px_0_0_hsl(var(--primary))] py-3",
+                                formFieldLabel: "font-bold uppercase tracking-wide text-xs",
+                                footerAction: "hidden",
+                                footer: "hidden",
+                                identityPreview: "border-3 border-foreground bg-section-green",
+                                identityPreviewText: "font-bold",
+                                identityPreviewEditButton: "text-primary font-bold uppercase",
+                            }
+                        }}
+                        routing="path"
+                        path="/signup"
+                        signInUrl="/login"
+                    />
+                </div>
 
-                        <div className="space-y-2">
-                            <label htmlFor="email" className="text-sm font-medium">Email</label>
-                            <Input
-                                id="email"
-                                type="email"
-                                placeholder="you@example.com"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                                disabled={isLoading}
-                            />
-                        </div>
+                {/* Footer Link */}
+                <p className="text-center text-sm text-muted-foreground mt-6">
+                    Already have an account?{' '}
+                    <a href="/login" className="font-bold text-foreground hover:text-[#E85C3D] underline underline-offset-4 transition-colors">
+                        Sign in
+                    </a>
+                </p>
 
-                        <div className="space-y-2">
-                            <label htmlFor="password" className="text-sm font-medium">Password</label>
-                            <Input
-                                id="password"
-                                type="password"
-                                placeholder="••••••••"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                                disabled={isLoading}
-                            />
-                        </div>
-
-                        <div className="space-y-2">
-                            <label htmlFor="confirmPassword" className="text-sm font-medium">Confirm Password</label>
-                            <Input
-                                id="confirmPassword"
-                                type="password"
-                                placeholder="••••••••"
-                                value={confirmPassword}
-                                onChange={(e) => setConfirmPassword(e.target.value)}
-                                required
-                                disabled={isLoading}
-                            />
-                        </div>
-
-                        <Button type="submit" className="w-full" disabled={isLoading}>
-                            {isLoading ? (
-                                <>
-                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                    Creating account...
-                                </>
-                            ) : (
-                                'Create Account'
-                            )}
-                        </Button>
-                    </form>
-
-                    <div className="mt-6 text-center text-sm text-muted-foreground">
-                        Already have an account?{' '}
-                        <Link href="/login" className="text-primary hover:underline font-medium">
-                            Sign in
-                        </Link>
-                    </div>
-                </CardContent>
-            </Card>
+                {/* Decorative elements */}
+                <div className="hidden sm:block absolute -bottom-4 -right-4 w-16 h-16 bg-[#E85C3D] border-3 border-foreground rotate-12 -z-10" />
+                <div className="hidden sm:block absolute -top-4 -left-4 w-12 h-12 bg-primary border-3 border-foreground -rotate-12 -z-10" />
+            </div>
         </div>
     );
 }

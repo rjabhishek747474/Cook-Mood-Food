@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 import { useAuthStore } from '@/lib/auth';
 import { getDashboardToday, DashboardData } from '@/lib/api';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardSectionBlue, CardSectionGreen, CardSectionPink, CardSectionCoral } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { RecipeCard } from '@/components/RecipeCard';
@@ -55,7 +55,7 @@ export default function DashboardPage() {
             {/* Header */}
             <div className="flex items-center justify-between">
                 <div>
-                    <h1 className="text-2xl font-bold">
+                    <h1 className="text-2xl font-bold uppercase tracking-wide">
                         Welcome{data?.user?.name ? `, ${data.user.name}` : ''}! 👋
                     </h1>
                     <p className="text-muted-foreground">Here&apos;s your nutrition dashboard for today</p>
@@ -89,154 +89,128 @@ export default function DashboardPage() {
             {/* Dashboard Content */}
             {data && data.authenticated && (
                 <>
-                    {/* Nutrition Summary */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                        <Card className="bg-gradient-to-br from-orange-500/10 to-orange-500/5 border-orange-500/20">
-                            <CardContent className="pt-4">
-                                <div className="flex items-center gap-2">
-                                    <Flame className="h-5 w-5 text-orange-500" />
-                                    <span className="text-sm text-muted-foreground">Calories</span>
-                                </div>
-                                <p className="text-2xl font-bold mt-1">{data.nutrition?.calories || 0}</p>
-                            </CardContent>
-                        </Card>
-
-                        <Card className="bg-gradient-to-br from-red-500/10 to-red-500/5 border-red-500/20">
-                            <CardContent className="pt-4">
-                                <div className="flex items-center gap-2">
-                                    <Drumstick className="h-5 w-5 text-red-500" />
-                                    <span className="text-sm text-muted-foreground">Protein</span>
-                                </div>
-                                <p className="text-2xl font-bold mt-1">{data.nutrition?.protein_g || 0}g</p>
-                            </CardContent>
-                        </Card>
-
-                        <Card className="bg-gradient-to-br from-amber-500/10 to-amber-500/5 border-amber-500/20">
-                            <CardContent className="pt-4">
-                                <div className="flex items-center gap-2">
-                                    <Wheat className="h-5 w-5 text-amber-500" />
-                                    <span className="text-sm text-muted-foreground">Carbs</span>
-                                </div>
-                                <p className="text-2xl font-bold mt-1">{data.nutrition?.carbs_g || 0}g</p>
-                            </CardContent>
-                        </Card>
-
-                        <Card className="bg-gradient-to-br from-blue-500/10 to-blue-500/5 border-blue-500/20">
-                            <CardContent className="pt-4">
-                                <div className="flex items-center gap-2">
-                                    <Droplets className="h-5 w-5 text-blue-500" />
-                                    <span className="text-sm text-muted-foreground">Fats</span>
-                                </div>
-                                <p className="text-2xl font-bold mt-1">{data.nutrition?.fats_g || 0}g</p>
-                            </CardContent>
-                        </Card>
+                    {/* Nutrition Summary - Yellow Section */}
+                    <div className="yellow-section">
+                        <div className="section-label mb-4">
+                            <Flame className="h-4 w-4" />
+                            Today&apos;s Nutrition
+                        </div>
+                        <div className="grid grid-cols-4 gap-4">
+                            <div className="text-center">
+                                <div className="stat-number text-foreground">{data.nutrition?.calories || 0}</div>
+                                <div className="stat-label">Calories</div>
+                            </div>
+                            <div className="text-center">
+                                <div className="stat-number text-[#E85C3D]">{data.nutrition?.protein_g || 0}g</div>
+                                <div className="stat-label">Protein</div>
+                            </div>
+                            <div className="text-center">
+                                <div className="stat-number text-foreground">{data.nutrition?.carbs_g || 0}g</div>
+                                <div className="stat-label">Carbs</div>
+                            </div>
+                            <div className="text-center">
+                                <div className="stat-number text-[#00B4D8]">{data.nutrition?.fats_g || 0}g</div>
+                                <div className="stat-label">Fats</div>
+                            </div>
+                        </div>
                     </div>
 
                     {/* Goals Progress */}
                     {data.goals && data.goals.length > 0 && (
-                        <Card>
-                            <CardHeader className="pb-2">
-                                <CardTitle className="flex items-center gap-2 text-lg">
-                                    <Target className="h-5 w-5 text-primary" />
-                                    Goal Progress
-                                </CardTitle>
-                            </CardHeader>
-                            <CardContent className="space-y-4">
+                        <CardSectionGreen>
+                            <div className="section-label mb-3">
+                                <Target className="h-4 w-4" />
+                                Goal Progress
+                            </div>
+                            <div className="space-y-4">
                                 {data.goals.map((goal, index) => (
                                     <div key={index}>
-                                        <div className="flex justify-between text-sm mb-1">
-                                            <span className="capitalize">{goal.kind}</span>
-                                            <span>{goal.current} / {goal.target}</span>
+                                        <div className="flex justify-between text-sm mb-2 font-medium">
+                                            <span className="uppercase tracking-wide">{goal.kind}</span>
+                                            <span className="font-mono">{goal.current} / {goal.target}</span>
                                         </div>
-                                        <div className="h-2 bg-muted rounded-full overflow-hidden">
-                                            <div
-                                                className="h-full bg-primary rounded-full transition-all"
-                                                style={{ width: `${Math.min(100, goal.progress_percent)}%` }}
-                                            />
+                                        <div className="progress-blocks">
+                                            {[...Array(5)].map((_, i) => (
+                                                <div
+                                                    key={i}
+                                                    className={`progress-block ${i < Math.ceil(goal.progress_percent / 20) ? 'filled' : ''}`}
+                                                />
+                                            ))}
                                         </div>
                                     </div>
                                 ))}
-                            </CardContent>
-                        </Card>
+                            </div>
+                        </CardSectionGreen>
                     )}
 
                     {/* Action Card */}
                     {data.action_card && (
-                        <Alert className={
-                            data.action_card.type === 'success' ? 'border-green-500 bg-green-500/10' :
-                                data.action_card.type === 'warning' ? 'border-yellow-500 bg-yellow-500/10' :
-                                    'border-blue-500 bg-blue-500/10'
-                        }>
-                            <AlertTitle>{data.action_card.title}</AlertTitle>
-                            <AlertDescription className="flex items-center justify-between">
-                                <span>{data.action_card.message}</span>
+                        <div className={`border-3 border-foreground p-4 ${data.action_card.type === 'success' ? 'bg-section-green' :
+                                data.action_card.type === 'warning' ? 'bg-primary' :
+                                    'bg-section-blue'
+                            }`}>
+                            <div className="font-bold uppercase tracking-wide mb-1">{data.action_card.title}</div>
+                            <div className="flex items-center justify-between">
+                                <span className="text-sm">{data.action_card.message}</span>
                                 {data.action_card.action && data.action_card.action_url && (
                                     <Link href={data.action_card.action_url}>
-                                        <Button size="sm" variant="secondary">{data.action_card.action}</Button>
+                                        <Button size="sm" variant="default">{data.action_card.action}</Button>
                                     </Link>
                                 )}
-                            </AlertDescription>
-                        </Alert>
+                            </div>
+                        </div>
                     )}
 
                     {/* Quick Actions */}
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                         <Link href="/fridge">
-                            <Card className="hover:shadow-md transition-shadow cursor-pointer h-full">
-                                <CardContent className="pt-4 flex items-center gap-3">
-                                    <div className="p-2 rounded-lg bg-primary/10">
-                                        <Plus className="h-5 w-5 text-primary" />
-                                    </div>
-                                    <span className="font-medium text-sm">Log Meal</span>
-                                </CardContent>
-                            </Card>
+                            <CardSectionCoral className="cursor-pointer hover:shadow-[4px_4px_0_0_hsl(var(--foreground))] transition-all h-full">
+                                <div className="flex items-center gap-3">
+                                    <Plus className="h-5 w-5 text-[#E85C3D]" />
+                                    <span className="font-bold text-sm uppercase tracking-wide">Log Meal</span>
+                                </div>
+                            </CardSectionCoral>
                         </Link>
 
                         <Link href="/history">
-                            <Card className="hover:shadow-md transition-shadow cursor-pointer h-full">
-                                <CardContent className="pt-4 flex items-center gap-3">
-                                    <div className="p-2 rounded-lg bg-green-500/10">
-                                        <TrendingUp className="h-5 w-5 text-green-500" />
-                                    </div>
-                                    <span className="font-medium text-sm">View Trends</span>
-                                </CardContent>
-                            </Card>
+                            <CardSectionGreen className="cursor-pointer hover:shadow-[4px_4px_0_0_hsl(var(--foreground))] transition-all h-full">
+                                <div className="flex items-center gap-3">
+                                    <TrendingUp className="h-5 w-5 text-[#00D4AA]" />
+                                    <span className="font-bold text-sm uppercase tracking-wide">Trends</span>
+                                </div>
+                            </CardSectionGreen>
                         </Link>
 
                         <Link href="/favorites">
-                            <Card className="hover:shadow-md transition-shadow cursor-pointer h-full">
-                                <CardContent className="pt-4 flex items-center gap-3">
-                                    <div className="p-2 rounded-lg bg-red-500/10">
-                                        <Heart className="h-5 w-5 text-red-500" />
-                                    </div>
-                                    <span className="font-medium text-sm">Favorites</span>
-                                </CardContent>
-                            </Card>
+                            <CardSectionPink className="cursor-pointer hover:shadow-[4px_4px_0_0_hsl(var(--foreground))] transition-all h-full">
+                                <div className="flex items-center gap-3">
+                                    <Heart className="h-5 w-5 text-[#FF6B9D]" />
+                                    <span className="font-bold text-sm uppercase tracking-wide">Favorites</span>
+                                </div>
+                            </CardSectionPink>
                         </Link>
 
                         <Link href="/fitness">
-                            <Card className="hover:shadow-md transition-shadow cursor-pointer h-full">
-                                <CardContent className="pt-4 flex items-center gap-3">
-                                    <div className="p-2 rounded-lg bg-purple-500/10">
-                                        <Target className="h-5 w-5 text-purple-500" />
-                                    </div>
-                                    <span className="font-medium text-sm">Set Goals</span>
-                                </CardContent>
-                            </Card>
+                            <CardSectionBlue className="cursor-pointer hover:shadow-[4px_4px_0_0_hsl(var(--foreground))] transition-all h-full">
+                                <div className="flex items-center gap-3">
+                                    <Target className="h-5 w-5 text-[#00B4D8]" />
+                                    <span className="font-bold text-sm uppercase tracking-wide">Goals</span>
+                                </div>
+                            </CardSectionBlue>
                         </Link>
                     </div>
 
                     {/* Recipe of the Day */}
                     {data.recipe_of_day?.recipe && (
-                        <Card className="border-2 border-primary/20 bg-gradient-to-br from-primary/5 to-transparent">
-                            <CardHeader className="pb-2">
+                        <Card className="border-3 border-foreground">
+                            <CardHeader className="pb-2 bg-primary/10">
                                 <CardTitle className="flex items-center gap-2 text-lg">
-                                    <ChefHat className="h-5 w-5 text-primary" />
+                                    <ChefHat className="h-5 w-5 text-[#E85C3D]" />
                                     Recipe of the Day
                                 </CardTitle>
                             </CardHeader>
-                            <CardContent>
-                                <p className="text-sm text-muted-foreground italic mb-3">{data.recipe_of_day.reason}</p>
+                            <CardContent className="pt-4">
+                                <p className="text-sm text-muted-foreground italic mb-3 border-l-3 border-primary pl-3">{data.recipe_of_day.reason}</p>
                                 <Link href={`/fridge/${data.recipe_of_day.recipe.id}`}>
                                     <RecipeCard recipe={data.recipe_of_day.recipe} showNutrition />
                                 </Link>
