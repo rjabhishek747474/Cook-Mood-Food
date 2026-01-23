@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { getFitnessRecipes, getRecipeDetail, Recipe, RecipeCard as RecipeCardType, saveToHistory } from '@/lib/api';
+import { useQuery, useMutation } from '@tanstack/react-query';
+import { getCuisineRecipes, getRecipeDetail } from '@/lib/api';
 import { RecipeCard } from '@/components/RecipeCard';
 import { RecipeDetail } from '@/components/RecipeDetail';
 import { Button } from '@/components/ui/button';
@@ -10,28 +10,30 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
-import { Dumbbell, Loader2, Info, Sparkles, RefreshCw } from 'lucide-react';
+import { Globe, Loader2, Sparkles, MapPin } from 'lucide-react';
 
-type Goal = 'fat_loss' | 'muscle_gain' | 'maintenance';
+type Cuisine = 'Indian' | 'Japanese' | 'Chinese' | 'Italian' | 'Mexican' | 'Thai' | 'Global';
 
-const goals = [
-    { value: 'fat_loss' as Goal, label: 'Fat Loss', emoji: '🔥' },
-    { value: 'muscle_gain' as Goal, label: 'Muscle Gain', emoji: '💪' },
-    { value: 'maintenance' as Goal, label: 'Maintenance', emoji: '⚖️' },
+const cuisines = [
+    { value: 'Indian' as Cuisine, emoji: '🇮🇳' },
+    { value: 'Japanese' as Cuisine, emoji: '🇯🇵' },
+    { value: 'Chinese' as Cuisine, emoji: '🇨🇳' },
+    { value: 'Italian' as Cuisine, emoji: '🇮🇹' },
+    { value: 'Mexican' as Cuisine, emoji: '🇲🇽' },
+    { value: 'Thai' as Cuisine, emoji: '🇹🇭' },
+    { value: 'Global' as Cuisine, emoji: '🌍' },
 ];
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || '';
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
-export default function FitnessPage() {
-    const [goal, setGoal] = useState<Goal>('muscle_gain');
+export default function CuisinePage() {
+    const [cuisine, setCuisine] = useState<Cuisine>('Indian');
     const [selectedRecipeId, setSelectedRecipeId] = useState<string | null>(null);
     const [aiRecommendation, setAiRecommendation] = useState<any>(null);
-    const [savingRecipeId, setSavingRecipeId] = useState<string | null>(null);
-    const queryClient = useQueryClient();
 
-    const { data, isLoading, error, refetch } = useQuery({
-        queryKey: ['fitness', goal],
-        queryFn: () => getFitnessRecipes(goal),
+    const { data, isLoading, error } = useQuery({
+        queryKey: ['cuisine', cuisine],
+        queryFn: () => getCuisineRecipes(cuisine),
     });
 
     const { data: recipeDetail, isLoading: detailLoading } = useQuery({
@@ -42,7 +44,7 @@ export default function FitnessPage() {
 
     const generateMutation = useMutation({
         mutationFn: async () => {
-            const res = await fetch(`${API_BASE}/api/fitness/recommendation/${goal}`);
+            const res = await fetch(`${API_BASE}/api/cuisine/recommendation/${cuisine}`);
             if (!res.ok) throw new Error('Failed to generate');
             return res.json();
         },
@@ -51,22 +53,6 @@ export default function FitnessPage() {
         },
     });
 
-    const saveMutation = useMutation({
-        mutationFn: (recipe: RecipeCardType) => saveToHistory(recipe.id, recipe.required_ingredients),
-        onSuccess: () => {
-            setSavingRecipeId(null);
-            alert('Added to your cooking history! 🎉');
-        },
-        onError: () => {
-            setSavingRecipeId(null);
-        }
-    });
-
-    const handleMadeThis = (recipe: RecipeCardType) => {
-        setSavingRecipeId(recipe.id);
-        saveMutation.mutate(recipe);
-    };
-
     // Show recipe detail if selected
     if (selectedRecipeId && recipeDetail) {
         return (
@@ -74,9 +60,6 @@ export default function FitnessPage() {
                 <RecipeDetail
                     recipe={recipeDetail}
                     onBack={() => setSelectedRecipeId(null)}
-                    onCook={() => saveMutation.mutate(recipeDetail)}
-                    isSaving={saveMutation.isPending}
-                    isSaved={saveMutation.isSuccess}
                 />
             </div>
         );
@@ -96,13 +79,13 @@ export default function FitnessPage() {
             <div className="space-y-2">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                        <Dumbbell className="h-6 w-6 text-primary" />
-                        <h1 className="text-2xl font-bold">Fitness Recipes</h1>
+                        <Globe className="h-6 w-6 text-primary" />
+                        <h1 className="text-2xl font-bold">Global Cuisine</h1>
                     </div>
                     <Button
                         onClick={() => generateMutation.mutate()}
                         disabled={generateMutation.isPending}
-                        className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600"
+                        className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600"
                     >
                         {generateMutation.isPending ? (
                             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -113,17 +96,17 @@ export default function FitnessPage() {
                     </Button>
                 </div>
                 <p className="text-muted-foreground">
-                    Recipes optimized for your fitness goals with transparent nutrition info.
+                    Authentic recipes from around the world, made simple for home cooking.
                 </p>
             </div>
 
-            {/* Goal Selector */}
-            <Tabs value={goal} onValueChange={(v) => { setGoal(v as Goal); setAiRecommendation(null); }}>
-                <TabsList className="grid grid-cols-3 w-full">
-                    {goals.map(({ value, label, emoji }) => (
-                        <TabsTrigger key={value} value={value} className="gap-1">
+            {/* Cuisine Selector */}
+            <Tabs value={cuisine} onValueChange={(v) => { setCuisine(v as Cuisine); setAiRecommendation(null); }}>
+                <TabsList className="grid grid-cols-7 w-full">
+                    {cuisines.map(({ value, emoji }) => (
+                        <TabsTrigger key={value} value={value} className="gap-1 px-2">
                             <span>{emoji}</span>
-                            <span className="hidden sm:inline">{label}</span>
+                            <span className="hidden lg:inline text-xs">{value}</span>
                         </TabsTrigger>
                     ))}
                 </TabsList>
@@ -131,19 +114,22 @@ export default function FitnessPage() {
 
             {/* AI Recommendation */}
             {aiRecommendation && (
-                <Card className="border-2 border-orange-200 bg-gradient-to-r from-orange-50 to-red-50">
+                <Card className="border-2 border-blue-200 bg-gradient-to-r from-blue-50 to-purple-50">
                     <CardHeader className="pb-2">
                         <div className="flex items-center justify-between">
                             <CardTitle className="text-sm flex items-center gap-2">
-                                <Sparkles className="h-4 w-4 text-orange-500" />
+                                <Sparkles className="h-4 w-4 text-blue-500" />
                                 AI Recommendation of the Day
                             </CardTitle>
-                            <Badge className="bg-orange-500">{goal.replace('_', ' ')}</Badge>
+                            <Badge className="bg-blue-500 flex items-center gap-1">
+                                <MapPin className="h-3 w-3" />
+                                {cuisine}
+                            </Badge>
                         </div>
                     </CardHeader>
                     <CardContent>
                         <h3 className="font-semibold text-lg">{aiRecommendation.recipe?.name}</h3>
-                        <p className="text-sm text-muted-foreground mt-1">{aiRecommendation.tip}</p>
+                        <p className="text-sm text-muted-foreground mt-1">{aiRecommendation.cultural_note}</p>
                         <Button
                             variant="outline"
                             size="sm"
@@ -154,16 +140,6 @@ export default function FitnessPage() {
                         </Button>
                     </CardContent>
                 </Card>
-            )}
-
-            {/* Disclaimer */}
-            {data?.disclaimer && (
-                <Alert>
-                    <Info className="h-4 w-4" />
-                    <AlertDescription className="text-sm">
-                        {data.disclaimer}
-                    </AlertDescription>
-                </Alert>
             )}
 
             {/* Loading */}
@@ -190,9 +166,6 @@ export default function FitnessPage() {
                             key={recipe.id}
                             recipe={recipe}
                             onClick={() => setSelectedRecipeId(recipe.id)}
-                            showNutrition
-                            onMadeThis={handleMadeThis}
-                            isSaving={savingRecipeId === recipe.id}
                         />
                     ))}
                 </div>
@@ -203,11 +176,11 @@ export default function FitnessPage() {
                 <Card className="py-12 text-center">
                     <CardContent className="space-y-4">
                         <p className="text-muted-foreground">
-                            No recipes found for this goal. Try generating one with AI!
+                            No {cuisine} recipes in the database. Generate one with AI!
                         </p>
                         <Button onClick={() => generateMutation.mutate()}>
                             <Sparkles className="mr-2 h-4 w-4" />
-                            Generate AI Recipe
+                            Generate {cuisine} Recipe
                         </Button>
                     </CardContent>
                 </Card>

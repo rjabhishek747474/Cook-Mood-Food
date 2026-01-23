@@ -20,7 +20,7 @@ const goals = [
     { value: 'maintenance' as Goal, label: 'Maintenance', emoji: '⚖️' },
 ];
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || '';
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
 export default function FitnessPage() {
     const [goal, setGoal] = useState<Goal>('muscle_gain');

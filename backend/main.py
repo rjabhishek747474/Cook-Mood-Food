@@ -50,13 +50,19 @@ app = FastAPI(
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
-# CORS middleware - configurable for production
-cors_origins_str = os.getenv("CORS_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000")
-cors_origins = [origin.strip() for origin in cors_origins_str.split(",")]
+# CORS Configuration
+# In production, this should be restricted to the frontend domain
+origins = [
+    "http://localhost",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "https://dailycook-web.vercel.app",
+    "https://dailycook-ei0sad316-rajas-projects-2444d0ec.vercel.app"
+]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=cors_origins,
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

@@ -46,9 +46,8 @@ export default function RootLayout({
         <body className={`${outfit.className} ${spaceMono.variable}`}>
           <ThemeProvider
             attribute="class"
-            defaultTheme="light"
-            forcedTheme="light"
-            enableSystem={false}
+            defaultTheme="system"
+            enableSystem
             disableTransitionOnChange
           >
             <Providers>

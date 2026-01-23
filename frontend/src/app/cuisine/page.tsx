@@ -24,7 +24,7 @@ const cuisines = [
     { value: 'Global' as Cuisine, emoji: '🌍' },
 ];
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || '';
 
 export default function CuisinePage() {
     const [cuisine, setCuisine] = useState<Cuisine>('Indian');

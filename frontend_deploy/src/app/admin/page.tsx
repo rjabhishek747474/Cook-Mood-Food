@@ -12,7 +12,7 @@ import {
     History, Trash2, ShieldCheck, ShieldOff, RefreshCw
 } from 'lucide-react';
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || '';
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
 interface AdminStats {
     total_users: number;
