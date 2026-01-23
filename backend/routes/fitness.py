@@ -32,7 +32,7 @@ class FitnessResponse(BaseModel):
 async def get_fitness_recipes(
     goal: Literal["fat_loss", "muscle_gain", "maintenance"] = "maintenance",
     diet: Optional[str] = None,
-    include_ai: bool = True
+    include_ai: bool = False
 ):
     """
     Get recipes filtered by fitness goal with AI recommendation of the day.

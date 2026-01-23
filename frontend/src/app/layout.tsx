@@ -54,7 +54,7 @@ export default function RootLayout({
             <Providers>
               <div className="min-h-screen flex flex-col overflow-x-hidden">
                 {/* Main content area - allows full-width sections to break out */}
-                <main className="flex-1 w-full pb-20 md:pb-4">
+                <main className="flex-1 w-full pb-20">
                   {children}
                 </main>
                 <NavBar />

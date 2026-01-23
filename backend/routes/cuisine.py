@@ -36,7 +36,7 @@ class CuisineResponse(BaseModel):
 async def get_cuisine_recipes(
     cuisine: Literal["Indian", "Japanese", "Chinese", "Italian", "Mexican", "Thai", "Global"] = "Indian",
     diet: Optional[str] = None,
-    include_ai: bool = True
+    include_ai: bool = False
 ):
     """
     Get recipes by cuisine type with AI recommendation of the day.

@@ -35,7 +35,7 @@ class DrinksResponse(BaseModel):
 @router.get("/", response_model=DrinksResponse)
 async def get_drinks(
     category: Optional[str] = None,
-    include_ai: bool = True
+    include_ai: bool = False
 ):
     """
     Get drink recipes with AI recommendation of the day.

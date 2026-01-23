@@ -19,12 +19,16 @@ class RecipeEngine:
     
     def _load_data(self):
         """Load recipes and drinks from JSON"""
-        data_path = Path(__file__).parent.parent / "data" / "recipes.json"
+        data_path = Path(__file__).parent.parent / "data" / "recipes_expanded.json"
+        if not data_path.exists():
+             data_path = Path(__file__).parent.parent / "data" / "recipes.json"
+        
         try:
             with open(data_path, "r", encoding="utf-8") as f:
                 data = json.load(f)
                 self.recipes = data.get("recipes", [])
                 self.drinks = data.get("drinks", [])
+                print(f"Loaded {len(self.recipes)} recipes and {len(self.drinks)} drinks from {data_path.name}")
         except Exception as e:
             print(f"Warning: Could not load recipes: {e}")
     

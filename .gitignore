@@ -22,5 +22,5 @@ coverage/
 *.log
 
 # Database
-*.db
-backend/data/*.db
+# *.db
+# backend/data/*.db

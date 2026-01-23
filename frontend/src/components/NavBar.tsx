@@ -36,7 +36,7 @@ export function NavBar() {
     const navItems = mounted && isAuthenticated ? authNavItems : publicNavItems;
 
     return (
-        <nav className="fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur border-t-3 border-foreground z-50 md:static md:border-t-0 md:border-b-3 bottom-nav-safe">
+        <nav className="fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur border-t-3 border-foreground z-50 bottom-nav-safe">
             <div className="max-w-4xl mx-auto">
                 <ul className="flex justify-around md:justify-center md:gap-1">
                     {navItems.map(({ href, label, icon: Icon }) => (
