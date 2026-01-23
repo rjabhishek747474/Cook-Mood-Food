@@ -50,6 +50,31 @@ app = FastAPI(
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
+# Secure Headers
+from secure import Secure
+
+server = Secure.build_default_secure_headers()
+csp = (
+    Secure.ContentSecurityPolicy()
+    .default_src("'self'")
+    .script_src("'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net", "https://clerk.dailycook.app") # Add Clerk/CDN if needed
+    .style_src("'self'", "'unsafe-inline'")
+    .img_src("'self'", "data:", "https:")
+    .connect_src("'self'", "https://clerk.dailycook.app", "https://*.clerk.accounts.dev")
+    .font_src("'self'", "https:", "data:")
+)
+# Note: Enabling strict CSP might break things without careful tuning. 
+# For now, we will rely on HSTS and basic frame protection from build_default_secure_headers
+# or just use the basic set.
+
+secure_headers = Secure()
+
+@app.middleware("http")
+async def set_secure_headers(request, call_next):
+    response = await call_next(request)
+    secure_headers.framework.fastapi(response)
+    return response
+
 # CORS Configuration
 # In production, this should be restricted to the frontend domain
 origins = [
@@ -57,7 +82,8 @@ origins = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
     "https://dailycook-web.vercel.app",
-    "https://dailycook-ei0sad316-rajas-projects-2444d0ec.vercel.app"
+    "https://dailycook-ei0sad316-rajas-projects-2444d0ec.vercel.app",
+    "https://dailycook-api.vercel.app"
 ]
 
 app.add_middleware(
